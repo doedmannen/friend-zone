@@ -11,6 +11,7 @@ app.use(express.json());
 let dbName = 'friendzone'
 mongoose.connect(`mongodb://localhost/${dbName}`, {
 	useNewUrlParser: true,
+	useUnifiedTopology: true
 });
 
 /*
@@ -109,7 +110,7 @@ function reconstructRegExp(rx){
  * Serve static www
  * 
  * */
-app.use(express.static('www'));
+app.use(express.static('../build'));
 
 /*
  * 
