@@ -1,5 +1,4 @@
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -10,7 +9,32 @@ body {
 *{
 	padding: 0; 
 	margin: 0; 
+	color: black;
 }
+
+a:link{
+	color: black;
+	cursor: pointer;
+	text-decoration: none;
+}
+a:visited{
+	color: black;
+	cursor: pointer;
+	text-decoration: none;
+}
+a:hover{
+	color: black;
+	cursor: pointer;
+	text-decoration: none;
+}
+a:active{
+	color: black;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+
+
 /* global padders */
 .p-1{
 	padding: 5px; 
