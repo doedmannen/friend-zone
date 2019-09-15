@@ -1,11 +1,13 @@
 const subs = [];
-const store = {}; 
+const store = {
+}; 
 
 
 store.setState = (changeObject) => {
 	Object.assign(store, changeObject);
-	for(let sub of subs){
-		sub(changeObject, store); 
+	let sub;
+	for(sub of subs){
+		sub(changeObject); 
 	}
 };  
 
@@ -18,6 +20,7 @@ store.unSub = (fun) => {
 	if(index < 0) { return; }
 	subs.splice(index, 1); 
 }
+
 
 export default store; 
 
