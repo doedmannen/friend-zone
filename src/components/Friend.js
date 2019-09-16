@@ -50,20 +50,47 @@ export default class Friend extends Component {
 
 
 	render(){
+		let containerSize;
+		switch(store.screenSize.name){
+			case 'XS': 
+				containerSize = 'flex-10';
+				break;
+			case 'SM': 
+				containerSize = 'flex-8';
+				break;
+			case 'MD': 
+				containerSize = 'flex-6';
+				break;
+			case 'LG': 
+				containerSize = 'flex-4';
+				break;
+			default: 
+				containerSize = 'flex-2';
+				break;
+		}
+
+
 		return(
-			<div>
-				<div>
-					<div>{this.props.firstName} {this.props.lastName} in { this.props.country } { this.props.city }</div>
-					<div>
-						{ this.state.time.DAY }/  
-						{ this.state.time.YEAR }/  
-						{ this.state.time.MONTH + ' '}
-						{' ' + this.state.time.TIME24 }
+			<div className="flex flex-dir-row">
+				<div className="flex-1"></div>	
+				<div className={containerSize + ' flex flex-dir-row p-3 mr-5 ml-5 friendContainer'}>
+					
+					<div className="mr-2">
+						<Clock key={Math.random()} size="50" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
+					</div>
+					
+					<div className="flex-1">
+						<div>{this.props.firstName} {this.props.lastName} { this.props.country } { this.props.city }</div>
+						<div className="digital-time">
+							{ this.state.time.DAY }/  
+							{ this.state.time.YEAR }/  
+							{ this.state.time.MONTH + ' '}
+							{' ' + this.state.time.TIME24 }
 						</div>
+					</div>
+				
 				</div>
-				<div>
-					<Clock key={Math.random()} size="75" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
-				</div>
+				<div className="flex-1"></div>
 			</div>	
 		);
 	}
