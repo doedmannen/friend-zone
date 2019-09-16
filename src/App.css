@@ -4,6 +4,7 @@
 	height: 100vh;
 	display: flex;
 	flex-direction: column; 
+	background-color: #2d2d2d;
 }
 
 .mainHeader{

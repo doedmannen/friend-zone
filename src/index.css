@@ -1,30 +1,46 @@
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 /*
  * Sit down and shut up margin and padding
  * */
 *{
 	padding: 0; 
 	margin: 0; 
-	color: black;
+	color: #c0c0c0;
+	font-family: 'Shadows Into Light', cursive;
+	font-size: 12pt; 
+}
+
+.header{
+	font-family: 'Pacifico', cursive;
 }
 
 /*
+ *Textsize
+ * */
+.text-100{
+	font-size: 12px;
+}
+.text-200{
+	font-size: 16pt; 
+}
+.text-300{
+	font-size: 20pt; 
+}
+.text-400{
+	font-size: 24pt; 
+}
+.text-500{
+	font-size: 28pt; 
+}
+/*
  * Links 
  * */
-a:link, a:visited{
-	color: black;
+a:link > *, a:visited > *, a:link, a:visited {
+	color: #c0c0c0;
 	cursor: pointer;
 	text-decoration: none;
 }
-a:active, a:hover{
-	color: grey;
+a:active > *, a:hover > *, a:active, a:hover{
+	color: #f0f0f0;
 	cursor: pointer;
 	text-decoration: none;
 }
@@ -43,6 +59,40 @@ a:active, a:hover{
 }
 .block{
 	display: block;
+}
+
+/*
+ * Flexsize 
+ * */
+.flex-1{
+	flex: 1; 
+}
+.flex-2{
+	flex: 2; 
+}
+.flex-3{
+	flex: 3; 
+}
+.flex-4{
+	flex: 4; 
+}
+.flex-5{
+	flex: 5; 
+}
+.flex-6{
+	flex: 6; 
+}
+.flex-7{
+	flex: 7; 
+}
+.flex-8{
+	flex: 8; 
+}
+.flex-9{
+	flex: 9; 
+}
+.flex-10{
+	flex: 10; 
 }
 
 /*
