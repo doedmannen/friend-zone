@@ -6,11 +6,15 @@
 	margin: 0; 
 	color: #c0c0c0;
 	font-family: 'Shadows Into Light', cursive;
-	font-size: 12pt; 
+	font-size: 12pt;
 }
 
 .header{
 	font-family: 'Pacifico', cursive;
+}
+
+.digital-time{
+	font-family: 'Iceland', cursive;
 }
 
 /*
@@ -61,6 +65,15 @@ a:active > *, a:hover > *, a:active, a:hover{
 	display: block;
 }
 
+/*
+ * Directions
+ * */
+.flex-dir-col{
+	flex-direction: column; 
+}
+.flex-dir-row{
+	flex-direction: row; 
+}
 /*
  * Flexsize 
  * */
