@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import store from './util/Store'; 
-import ScreenCalc from './util/ScreenCalc';
 
 import Home from './views/Home'; 
 import Login from './views/Login';
@@ -20,7 +19,6 @@ export default class App extends Component {
 	state = {};
 
 	componentDidMount(){
-		ScreenCalc();	
 		this.storeSub = (changes) => {
 			this.setState( { } );
 		}
@@ -34,21 +32,17 @@ export default class App extends Component {
 
 
 	render(){
-		let navbarOrder;  
-		if(store.screenSize && store.screenSize.isMDorAbove){
-			navbarOrder = "order-2";
-		}	else {
-			navbarOrder = 'order-4';
-		}
+		let navbarOrder = store.screenSize.isMDorAbove ? 'order-2 mainHeaderNavigation' : 'order-5';  
 		return(
 			<Router> 
 				<div className="App">
 					<header className="mainHeader order-1">
-						<div className="header text-500 pb-4 pt-2">
+						<div className="header text-500 mb-2 pt-2">
 							FriendZone 
 						</div>
 					</header>
-					<main className="mainApplication order-3">
+					<div className="mainHeaderBottom order-3"></div>
+					<main className="mainApplication order-4 mt-4">
 						<Switch>
 							<Route path="/" exact component={Home} /> 
 							<Route path="/add" component={AddFriend} /> 
