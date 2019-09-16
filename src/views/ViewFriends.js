@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import store from '../util/Store'; 
+import Friend from '../components/Friend';
 
 import './ViewFriends.css';
 
@@ -8,10 +9,13 @@ import './ViewFriends.css';
 
 export default class ViewFriends extends Component {
 
+	state = {};
 
 	componentDidMount(){
-		this.storeSub = function(changes, store){}
-		store.subTo(this.storeSub); 
+		this.storeSub = (changes) => {
+			this.setState( { } );
+		}
+		store.subTo(this.storeSub);
 	}
 
 	componentWillUnmount(){
@@ -22,7 +26,7 @@ export default class ViewFriends extends Component {
 	render(){
 		return(
 			<div>
-				Welcome to viewFriends.js
+				
 			</div>	
 		);
 	}

@@ -8,10 +8,13 @@ import './Home.css';
 
 export default class Home extends Component {
 
+	state = {};
 
 	componentDidMount(){
-		this.storeSub = function(changes, store){}
-		store.subTo(this.storeSub); 
+		this.storeSub = (changes) => {
+			this.setState( { } );
+		}
+		store.subTo(this.storeSub);
 	}
 
 	componentWillUnmount(){
@@ -27,5 +30,7 @@ export default class Home extends Component {
 		);
 	}
 }
+
+
 
 

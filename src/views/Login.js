@@ -8,15 +8,19 @@ import './Login.css';
 
 export default class Login extends Component {
 
+	state = {};
 
 	componentDidMount(){
-		this.storeSub = function(changes, store){}
-		store.subTo(this.storeSub); 
+		this.storeSub = (changes) => {
+			this.setState( { } );
+		}
+		store.subTo(this.storeSub);
 	}
 
 	componentWillUnmount(){
 		store.unSub(this.storeSub)
 	}
+
 
 
 	render(){

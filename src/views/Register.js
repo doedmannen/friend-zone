@@ -8,10 +8,13 @@ import './Register.css';
 
 export default class Register extends Component {
 
+	state = {};
 
 	componentDidMount(){
-		this.storeSub = function(changes, store){}
-		store.subTo(this.storeSub); 
+		this.storeSub = (changes) => {
+			this.setState( { } );
+		}
+		store.subTo(this.storeSub);
 	}
 
 	componentWillUnmount(){
