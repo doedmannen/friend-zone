@@ -11,6 +11,19 @@ export default class ViewFriends extends Component {
 
 	state = {};
 
+	friendInfo = {
+		firstName: "Friend", 
+		lastName: "Friendsson", 
+		country: "Sweden", 
+		city: "Stockholm", 
+		timeZone: {
+			name: 'Europe/Stockholm',
+			offset: 3600000,
+			dst_offset: 3600000,
+			dst: true
+		}
+	}; 
+
 	componentDidMount(){
 		this.storeSub = (changes) => {
 			this.setState( { } );
@@ -26,7 +39,7 @@ export default class ViewFriends extends Component {
 	render(){
 		return(
 			<div>
-				
+				<Friend {...this.friendInfo} />	
 			</div>	
 		);
 	}
