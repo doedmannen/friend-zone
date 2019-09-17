@@ -50,7 +50,7 @@ export default class Friend extends Component {
 
 
 	render(){
-		let containerSize;
+		let containerSize, date = [], formatDate, time = " ";
 		switch(store.screenSize.name){
 			case 'XS': 
 				containerSize = 'flex-10';
@@ -59,36 +59,49 @@ export default class Friend extends Component {
 				containerSize = 'flex-8';
 				break;
 			case 'MD': 
-				containerSize = 'flex-6';
+				containerSize = 'flex-1';
 				break;
 			case 'LG': 
-				containerSize = 'flex-4';
+				containerSize = 'flex-1';
 				break;
 			default: 
-				containerSize = 'flex-2';
+				containerSize = 'flex-1';
 				break;
 		}
 
+		formatDate = store.dateFormat.match(/[a-z]+/ig);
+		for(let s of formatDate){
+			if(s === 'DD'){
+				date.push(this.state.time.DAY);
+			} else if (s === 'MM'){
+				date.push(this.state.time.MONTH);
+			} else {
+				date.push(this.state.time.YEAR);
+			}
+		}
+		date = date.join("/");
+		time += store.timeFormat === '24HOUR' ? this.state.time.TIME24 : this.state.time.TIME12;  
 
 		return(
-			<div className="flex flex-dir-row">
+			<div className="flex flex-dir-row" style={{'justify-content': 'center'}}>
 				<div className="flex-1"></div>	
-				<div className={containerSize + ' flex flex-dir-row p-3 mr-5 ml-5 friendContainer'}>
+				<div className={containerSize + ' flex flex-dir-row p-3 card-container'}>
 					
-					<div className="mr-2">
+					<div className="mr-2 flex-1 flex" style={{'justify-content': 'space-around'}}>
 						<Clock key={Math.random()} size="50" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
 					</div>
 					
-					<div className="flex-1">
-						<div>{this.props.firstName} {this.props.lastName} { this.props.country } { this.props.city }</div>
+					<div className="flex-3">
+						<div>{this.props.firstName} {this.props.lastName} <br /> { this.props.country } { this.props.city }</div>
 						<div className="digital-time">
-							{ this.state.time.DAY }/  
-							{ this.state.time.YEAR }/  
-							{ this.state.time.MONTH + ' '}
-							{' ' + this.state.time.TIME24 }
+							{ date } 
+							{ time } 
 						</div>
 					</div>
-				
+					<div className="flex-1 flex flex-dir-row justify-space-around">
+						<Link to="editContact/23fewfewefwef"><div className="p-1 text-300"><i class="fas fa-pencil-alt text-300"></i></div></Link>
+						<div className="p-1 pointer"><i class="far fa-caret-square-down text-300"></i></div> 
+					</div>
 				</div>
 				<div className="flex-1"></div>
 			</div>	
