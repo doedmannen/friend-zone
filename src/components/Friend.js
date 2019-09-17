@@ -56,7 +56,7 @@ export default class Friend extends Component {
 				containerSize = 'flex-10';
 				break;
 			case 'SM': 
-				containerSize = 'flex-8';
+				containerSize = 'flex-4';
 				break;
 			case 'MD': 
 				containerSize = 'flex-1';
