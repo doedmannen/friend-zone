@@ -1,5 +1,8 @@
 const subs = [];
 const store = {
+	lang: 'EN',
+	dateFormat: 'DD/MM/YYYY',
+	timeFormat: '24HOUR'
 }; 
 
 
