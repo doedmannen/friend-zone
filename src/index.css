@@ -74,6 +74,20 @@ a:active > *, a:hover > *, a:active, a:hover{
 .flex-dir-row{
 	flex-direction: row; 
 }
+
+/*
+ * Flex justice
+ * */
+.justify-center{
+	justify-content: center; 
+}
+.justify-space-around{
+	justify-content: space-around;
+}
+.justify-space-between{
+	justify-content: space-between; 
+}
+
 /*
  * Flexsize 
  * */
@@ -310,4 +324,38 @@ a:active > *, a:hover > *, a:active, a:hover{
 }
 
 
+/*
+ * Card
+ * */
+.card-container{
+	border: 1px solid #0a0a0a;
+	background-color: #1d1d1d;
+	border-radius: 10px;  
+	box-shadow: 2px 2px 3px #0a0a0a;
+}
 
+
+
+
+/*
+ * Colors
+ * */
+.red{
+	background-color: red; 
+}
+.yellow{
+	background-color: yellow; 
+}
+.green{
+	background-color: green; 
+}
+.blue{
+	background-color: blue;
+}
+
+/*
+ * Cursors
+ * */
+.pointer{
+	cursor: pointer;
+}
