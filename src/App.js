@@ -32,7 +32,7 @@ export default class App extends Component {
 
 
 	render(){
-		let navbarOrder = store.screenSize.isMDorAbove ? 'order-2 mainHeaderNavigation' : 'order-5';  
+		let navbarOrder = store.screenSize.isMDorAbove ? 'order-2 mainHeaderNavigation' : ' pb-2 order-5';  
 		return(
 			<Router> 
 				<div className="App">
@@ -41,8 +41,8 @@ export default class App extends Component {
 							FriendZone 
 						</div>
 					</header>
-					<div className="mainHeaderBottom order-3"></div>
-					<main className="mainApplication order-4 mt-4">
+					<div className="mainHeaderBottom order-3 pt-2"></div>
+					<main className="mainApplication order-4 mt-4 pr-3 pl-3">
 						<Switch>
 							<Route path="/" exact component={Home} /> 
 							<Route path="/add" component={AddFriend} /> 
@@ -57,16 +57,16 @@ export default class App extends Component {
 					<section className={ 'mainNavigation ' + navbarOrder  }>
 						<div className="flex-1"></div>
 						<div className="linkNavigation flex-1">
-							<Link to="/"><i class="fas fa-home text-300"></i></Link>
+							<Link to="/"><div><i class="fas fa-home text-300"></i></div></Link>
 						</div>
 						<div className="linkNavigation flex-1">
-							<Link to="/add"><i class="fas fa-plus-circle text-300"></i></Link>
+							<Link to="/add"><div><i class="fas fa-plus-circle text-300"></i></div></Link>
 						</div>
 						<div className="linkNavigation flex-1">
-							<Link to="/myFriends"><i class="fas fa-users text-300"></i></Link>
+							<Link to="/myFriends"><div><i class="fas fa-users text-300"></i></div></Link>
 						</div>
 						<div className="linkNavigation flex-1">
-							<Link to="/settings"><i class="fas fa-cog text-300"></i></Link>
+							<Link to="/settings"><div><i class="fas fa-cog text-300"></i></div></Link>
 						</div>
 						<div className="flex-1"></div>
 					</section>
