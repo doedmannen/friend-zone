@@ -50,7 +50,7 @@ export default class Friend extends Component {
 
 
 	render(){
-		let containerSize, date = [], formatDate, time = " ";
+		let containerSize, date = [], formatDate, time = " ", status;
 		switch(store.screenSize.name){
 			case 'XS': 
 				containerSize = 'flex-10';
@@ -81,26 +81,26 @@ export default class Friend extends Component {
 		}
 		date = date.join("/");
 		time += store.timeFormat === '24HOUR' ? this.state.time.TIME24 : this.state.time.TIME12;  
+		status = <i class="fas fa-bed"></i> ;
 
 		return(
 			<div className="flex flex-dir-row" style={{'justify-content': 'center'}}>
 				<div className="flex-1"></div>	
 				<div className={containerSize + ' flex flex-dir-row p-3 card-container'}>
 					
-					<div className="mr-2 flex-1 flex" style={{'justify-content': 'space-around'}}>
+					<div className="mr-2 flex-2 flex" style={{'justify-content': 'space-around'}}>
 						<Clock key={Math.random()} size="50" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
 					</div>
 					
-					<div className="flex-3">
-						<div>{this.props.firstName} {this.props.lastName} <br /> { this.props.country } { this.props.city }</div>
+					<div className="flex-5">
+						<div>
+							<div>{status} {this.props.firstName} {this.props.lastName} </div>
+							<div>{ this.props.country } { this.props.city }</div>
+						</div>
 						<div className="digital-time">
 							{ date } 
 							{ time } 
 						</div>
-					</div>
-					<div className="flex-1 flex flex-dir-row justify-space-around">
-						<Link to="editContact/23fewfewefwef"><div className="p-1 text-300"><i class="fas fa-pencil-alt text-300"></i></div></Link>
-						<div className="p-1 pointer"><i class="far fa-caret-square-down text-300"></i></div> 
 					</div>
 				</div>
 				<div className="flex-1"></div>
