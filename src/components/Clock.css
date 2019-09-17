@@ -7,7 +7,6 @@ set border to parseInt(1% of that number)
   background-color: #DFDFDF;
   border-radius: 50%;
   position: relative;
-	left: 35%;
 }
 .clockdiv{
   top: 1.1%;
