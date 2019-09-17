@@ -50,7 +50,7 @@ const PORT = 5000;
 const collectionMap = {
 	friend: require('./schema/Friend'),
 	user: require('./schema/User'),
-	timeZone: require('./schema/TimeZone')
+	timezone: require('./schema/TimeZone')
 }
 
 /*
