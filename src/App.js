@@ -37,9 +37,11 @@ export default class App extends Component {
 			<Router> 
 				<div className="App">
 					<header className="mainHeader order-1">
-						<div className="header text-500 mb-2 pt-2">
-							FriendZone 
-						</div>
+						<Link to="/">
+							<div className="header text-500 mb-2 pt-2">
+								FriendZone 
+							</div>
+						</Link>
 					</header>
 					<div className="mainHeaderBottom order-3 pt-2"></div>
 					<main className="mainApplication order-4 mt-4 pr-3 pl-3">
