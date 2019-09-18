@@ -61,7 +61,7 @@ class SuperMongo{
 		if(this._id){
 			url = `${window.location.origin}/api/${this.constructor.name}/${this._id}` 
 		} else {
-			this = null; 
+			console.log("deleted"); 
 		}
 
 		if(url){
@@ -69,7 +69,7 @@ class SuperMongo{
 			try{
 				r.json();
 				if(r.successful){
-					this = null;
+					console.log("deleted");
 				}
 			}catch(err){}
 		}
