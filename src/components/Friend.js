@@ -41,7 +41,7 @@ export default class Friend extends Component {
 		store.subTo(this.storeSub);
 		this._isMounted = true; 
 		this.updateClock();
-}
+	}
 
 	componentWillUnmount(){
 		store.unSub(this.storeSub)
