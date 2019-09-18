@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import store from '../util/Store'; 
 
-export default class AddFriend extends Component {
+export default class InputTextField extends Component {
 
 	componentDidMount(){
 		this.storeSub = (changes) => {
