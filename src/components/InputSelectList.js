@@ -16,8 +16,12 @@ export default class InputSelectList extends Component {
 		store.unSub(this.storeSub)
 	}
 
-	toggleExpand(){
-		this.setState({ expand: !this.state.expand });
+	toggleExpand(bool){
+		if(typeof bool === 'boolean'){
+			this.setState({ expand: bool })
+		} else {
+			this.setState({ expand: !this.state.expand });
+		}
 		if(!this.state.expand){
 			// Scroll down on expand
 			setTimeout(() =>{
@@ -69,17 +73,20 @@ export default class InputSelectList extends Component {
 			<div className="flex flex-dir-row mb-3">
 				<div className="flex-1"></div>
 				<div className="flex-3 flex flex-dir-col">
+					<input type="text" 
+						className={ "pointer card-container input-text-field p-3 flex-1 " + (this.errors.length ? 'has-errors-input' : '') }
+						value={ this.display() }
+						style={this.state.expand ? { 'z-index': '-100', position: 'absolute' } : {} }
+						placeholder={ this.props.placeHolder }
+						readonly="readonly"
+						onBlur={ e => this.toggleExpand(false) }
+						onFocus={ e => this.toggleExpand(true) }
+						onClick={ e => this.toggleExpand() } />	
+						<div className={ "pt-1 input-error-text text-100 " + (this.errors.length ? 'block' : 'hidden') }>{ errorText }</div>
+
 					{ !this.state.expand ?
-						<>
-							<input type="text" 
-								className={ "pointer card-container input-text-field p-3 flex-1 " + (this.errors.length ? 'has-errors-input' : '') }
-								value={ this.display() }
-								placeholder={ this.props.placeHolder }
-								readonly="readonly"
-								onClick={ e => this.toggleExpand() } />	
-								<div className={ "pt-1 input-error-text text-100 " + (this.errors.length ? 'block' : 'hidden') }>{ errorText }</div>
-						</>
-					: 
+							null 
+						: 
 						<>
 							<div 
 								className={ "pointer list-drop-noeffect flex-1 " + (this.errors.length ? 'has-errors-input' : '') }
