@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import store from '../util/Store'; 
 import TimeZone from '../mongo_schema/TimeZone';
-import InputTextField from '../components/InputTextField.js'; 
+import InputTextField from '../components/InputTextField'; 
+import InputSelectList from '../components/InputSelectList';
 
 import './AddFriend.css';
 
@@ -127,17 +128,12 @@ export default class AddFriend extends Component {
 					placeHolder={ inputNames['city'] }
 					max={25}
 					requiredField={true} />
-				
-				<div className="flex flex-dir-row mb-3">
-					<div className="flex-1"></div>
-					<div className="flex-3 flex">
-						<select className="card-container input-text-field p-3 flex-1">
-							{ this.printTimeZones() }
-						</select>
-					</div>
-					<div className="flex-1"></div>
-				</div>
 
+				<InputSelectList 
+					onInput={this.handleInput}
+					fieldName="timeZone"
+					placeHolder={ inputNames['timeZone']}
+					items={ this.state.timeZones }/>
 
 
 				<div className="flex">
