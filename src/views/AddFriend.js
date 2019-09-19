@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import store from '../util/Store'; 
-import TimeZone from '../mongo_schema/TimeZone';
 import InputTextField from '../components/InputTextField'; 
 import InputSelectList from '../components/InputSelectList';
 
-import './AddFriend.css';
+import TimeZone from '../mongo_schema/TimeZone';
+import Friend from '../mongo_schema/Friend';
 
+import './AddFriend.css';
 
 
 export default class AddFriend extends Component {
@@ -73,7 +74,6 @@ export default class AddFriend extends Component {
 	}
 
 	handleInput(who, what){
-		console.log('parent got: ', what, ' sent from ', who);
 		let inputFromFields = this.state.inputFromFields;
 		inputFromFields[who] = what; 
 		this.setState( { inputFromFields } );
@@ -133,6 +133,7 @@ export default class AddFriend extends Component {
 					onInput={this.handleInput}
 					fieldName="timeZone"
 					placeHolder={ inputNames['timeZone']}
+					displayField="name"
 					items={ this.state.timeZones }/>
 
 
