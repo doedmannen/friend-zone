@@ -32,19 +32,19 @@ export default class App extends Component {
 
 
 	render(){
-		let navbarOrder = store.screenSize.isMDorAbove ? 'order-2 mainHeaderNavigation' : ' pb-2 order-5';  
+		let navbarOrder = store.screenSize.isMDorAbove ? 'order-2 main-header-navigation' : ' pb-2 pt-2 order-5 bottom-navigation';  
 		return(
 			<Router> 
-				<div className="App">
-					<header className="mainHeader order-1">
+				<div className="app">
+					<header className="main-header order-1">
 						<Link to="/">
 							<div className="header text-500 mb-2 pt-2">
 								FriendZone 
 							</div>
 						</Link>
 					</header>
-					<div className="mainHeaderBottom order-3 pt-2"></div>
-					<main className="mainApplication order-4 mt-4 pr-3 pl-3">
+					<div className="main-header-bottom order-3 pt-2"></div>
+					<main className="main-application order-4 mt-4 pr-3 pl-3 mb-5 pb-5">
 						<Switch>
 							<Route path="/" exact component={Home} /> 
 							<Route path="/add" component={AddFriend} /> 
@@ -56,7 +56,7 @@ export default class App extends Component {
 						</Switch>
 					</main>
 
-					<section className={ 'mainNavigation ' + navbarOrder  }>
+					<section className={ 'main-navigation ' + navbarOrder  }>
 						<div className="flex-1"></div>
 						<div className="linkNavigation flex-1">
 							<Link to="/"><div><i class="fas fa-home text-300"></i></div></Link>
