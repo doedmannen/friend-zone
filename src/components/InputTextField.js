@@ -61,7 +61,6 @@ export default class InputTextField extends Component {
 	}	
 
 	validateInput(){
-		console.log(this.props);
 		if(!this.state.input.length && this.props.requiredField){
 			this.errors.push(`${this.state.translations[store.lang].required}`)
 		}
