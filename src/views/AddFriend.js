@@ -52,7 +52,11 @@ export default class AddFriend extends Component {
 		}, 
 		timeZones: [],
 		inputFromFields: {
-
+			'firstName': undefined, 
+			'lastName': undefined, 
+			'country': undefined,
+			'city': undefined,
+			'timeZone': undefined
 		}
 	};
 
@@ -79,8 +83,12 @@ export default class AddFriend extends Component {
 		this.setState( { inputFromFields } );
 	}
 
-	submit(){
-		console.log(this.state.inputFromFields);
+	async submit(){
+		for(let k in this.state.inputFromFields){
+			if(!this.state.inputFromFields[k]) return; 
+		}
+		let friend = new Friend(this.state.inputFromFields);
+		await friend.save();
 	}
 
 	printTimeZones(){
