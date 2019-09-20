@@ -59,16 +59,16 @@ export default class App extends Component {
 					<section className={ 'main-navigation ' + navbarOrder  }>
 						<div className="flex-1"></div>
 						<div className="linkNavigation flex-1">
-							<Link to="/"><div><i class="fas fa-home text-300"></i></div></Link>
+							<Link to="/"><div><i className="fas fa-home text-300"></i></div></Link>
 						</div>
 						<div className="linkNavigation flex-1">
-							<Link to="/add"><div><i class="fas fa-plus-circle text-300"></i></div></Link>
+							<Link to="/add"><div><i className="fas fa-plus-circle text-300"></i></div></Link>
 						</div>
 						<div className="linkNavigation flex-1">
-							<Link to="/myFriends"><div><i class="fas fa-users text-300"></i></div></Link>
+							<Link to="/myFriends"><div><i className="fas fa-users text-300"></i></div></Link>
 						</div>
 						<div className="linkNavigation flex-1">
-							<Link to="/settings"><div><i class="fas fa-cog text-300"></i></div></Link>
+							<Link to="/settings"><div><i className="fas fa-cog text-300"></i></div></Link>
 						</div>
 						<div className="flex-1"></div>
 					</section>
