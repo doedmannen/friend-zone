@@ -16,7 +16,22 @@ import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 
 export default class App extends Component {
 
-	state = {};
+	state = {
+		translations: {
+			'EN': {
+				'HOME': 'HOME',
+				'ADD': 'ADD',
+				'FRIENDS': 'FRIENDS',
+				'SETTINGS': 'SETTINGS'
+			},
+			'SE': {
+				'HOME': 'HEM',
+				'ADD': 'LÄGG TILL',
+				'FRIENDS': 'VÄNNER',
+				'SETTINGS': 'INSTÄLLNINGAR'
+			}
+		}
+	};
 
 	componentDidMount(){
 		this.storeSub = (changes) => {
@@ -59,16 +74,28 @@ export default class App extends Component {
 					<section className={ 'main-navigation ' + navbarOrder  }>
 						<div className="flex-1"></div>
 						<div className="linkNavigation flex-1">
-							<Link to="/"><div><i className="fas fa-home text-300"></i></div></Link>
+							<Link to="/"><div>
+								<i className="fas fa-home text-300 pr-3"></i> 
+								{ store.screenSize.isMDorAbove ? this.state.translations[store.lang]['HOME'] : null } 
+								</div></Link>
 						</div>
 						<div className="linkNavigation flex-1">
-							<Link to="/add"><div><i className="fas fa-plus-circle text-300"></i></div></Link>
+							<Link to="/add"><div>
+								<i className="fas fa-plus-circle text-300 pr-3"></i> 
+								{ store.screenSize.isMDorAbove ? this.state.translations[store.lang]['ADD'] : null }
+								</div></Link>
 						</div>
 						<div className="linkNavigation flex-1">
-							<Link to="/myFriends"><div><i className="fas fa-users text-300"></i></div></Link>
+							<Link to="/myFriends"><div>
+								<i className="fas fa-users text-300 pr-3"></i> 
+								{ store.screenSize.isMDorAbove ? this.state.translations[store.lang]['FRIENDS'] : null } 
+								</div></Link>
 						</div>
 						<div className="linkNavigation flex-1">
-							<Link to="/settings"><div><i className="fas fa-cog text-300"></i></div></Link>
+							<Link to="/settings"><div>
+								<i className="fas fa-cog text-300 pr-3"></i> 
+								{ store.screenSize.isMDorAbove ? this.state.translations[store.lang]['SETTINGS'] : null }	
+								</div></Link>
 						</div>
 						<div className="flex-1"></div>
 					</section>
