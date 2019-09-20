@@ -3,11 +3,11 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import store from '../util/Store'; 
 import Clock from './Clock';
 
-import './Friend.css';
+import './FriendDisplay.css';
 
 
 
-export default class Friend extends Component {
+export default class FriendDisplay extends Component {
 
 	state = { time: this.calcFriendTime() };
 
@@ -22,10 +22,15 @@ export default class Friend extends Component {
 		}
 	}
 
-	calcFriendTime(){
-		let offset = this.props.timeZone.offset, dst = this.props.timeZone.dst, dst_offset = this.props.timeZone.dst_offset, analog, time; 
 
-		time = new Date(Date.now() + offset + (dst ? dst_offset : 0)).toISOString().match(/\d{4}-|\d{2}-|\d{2}T|\d{2}:\d{2}:\d{2}/g).map(s => s.replace(/[^0-9:]/gi, "")).map(s => s.length === 2 ? s.replace(/^0/,""):s);
+
+	calcFriendTime(){
+		let t = this.props.friend.timeZone, time, analog, dst;
+
+		dst = t.dst && Date.now() > t.dst_from && Date.now() < t.dst_to;
+
+		time = new Date(Date.now() + t.offset + (dst ? t.dst_offset : 0)).toISOString().match(/\d{4}-|\d{2}-|\d{2}T|\d{2}:\d{2}:\d{2}/g).map(s => s.replace(/[^0-9:]/gi, "")).map(s => s.length === 2 ? s.replace(/^0/,""):s);
+		
 		time.push(time[time.length-1].match(/^\d{2}/)[0] / 1 > 11 ? `${time[time.length-1].match(/^\d{2}/)[0] - 12 === 0 ? 12 : time[time.length-1].match(/^\d{2}/)[0] - 12}${time[time.length-1].match(/:.*/)[0]} PM` : `${time[time.length-1]} AM`);
 
 		analog = ((time[time.length-1].match(/\d{1,2}:?/g)[0].replace(/[^\d]/g, "").replace(/12/, "0") / 1) * 3600) + ((time[time.length-1].match(/\d{1,2}:?/g)[1].replace(/[^\d]/g, "") / 1) * 60) + (time[time.length-1].match(/\d{1,2}:?/g)[2].replace(/[^\d]/g, "") / 1); 
@@ -33,6 +38,8 @@ export default class Friend extends Component {
 		return {YEAR: time[0], MONTH: time[1], DAY: time[2], TIME24: time[3], TIME12: time[4], TIMEANALOGDEGREE: {HOUR: ((analog * (360 / 43200))%360), MINUTE: ((analog * (360 / 3600))%360), SECOND: ((analog * (360 / 60))%360)}}
 		
 	}
+
+
 
 	componentDidMount(){
 		this.storeSub = (changes) => {
@@ -59,7 +66,7 @@ export default class Friend extends Component {
 				containerSize = 'flex-4';
 				break;
 			case 'MD': 
-				containerSize = 'flex-1';
+				containerSize = 'flex-2';
 				break;
 			case 'LG': 
 				containerSize = 'flex-1';
@@ -81,21 +88,21 @@ export default class Friend extends Component {
 		}
 		date = date.join("/");
 		time += store.timeFormat === '24HOUR' ? this.state.time.TIME24 : this.state.time.TIME12;  
-		status = <i class="fas fa-bed"></i> ;
+		status = <i className="fas fa-bed"></i> ;
 
 		return(
-			<div className="flex flex-dir-row" style={{'justify-content': 'center'}}>
+			<div className="flex flex-dir-row justify-center mb-3">
 				<div className="flex-1"></div>	
-				<div className={containerSize + ' flex flex-dir-row p-3 card-container'}>
+				<div className={containerSize + ' flex flex-dir-row p-3 card-container pointer'}>
 					
-					<div className="mr-2 flex-2 flex" style={{'justify-content': 'space-around'}}>
+					<div className="flex-2 flex justify-center">
 						<Clock key={Math.random()} size="50" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
 					</div>
 					
 					<div className="flex-5">
 						<div>
-							<div>{status} {this.props.firstName} {this.props.lastName} </div>
-							<div>{ this.props.country } { this.props.city }</div>
+							<div>{status} {this.props.friend.firstName} {this.props.friend.lastName} </div>
+							<div>{ this.props.friend.country } { this.props.friend.city }</div>
 						</div>
 						<div className="digital-time">
 							{ date } 
