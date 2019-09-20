@@ -22,16 +22,6 @@ export default class InputSelectList extends Component {
 		} else {
 			this.setState({ expand: !this.state.expand });
 		}
-		if(bool){
-			// Scroll down on expand
-			setTimeout(() =>{
-				window.scrollTo(0, window.scrollY+(window.innerHeight*0.20))	
-			}, 1);
-		} else {
-			setTimeout(() => {
-				window.scrollTo(0, window.scrollY-(window.innerHeight*0.20))
-			}, 1);
-		}
 	}
 
 	state = {
@@ -47,10 +37,6 @@ export default class InputSelectList extends Component {
 			}
 		}
 	}
-
-	display(){
-		return 	}; 
-
 
 	errors = []; 
 
@@ -94,12 +80,10 @@ export default class InputSelectList extends Component {
 						onClick={ e => this.toggleExpand(e, true) } />	
 						<div className={ "pt-1 input-error-text text-100 " + (this.errors.length ? 'block' : 'hidden') }>{ errorText }</div>
 
-					{ !this.state.expand ?
-							null 
-						: 
-						<>
 							<div 
-								className={ "pointer list-drop-noeffect flex-1 flex flex-dir-col " + (this.errors.length ? 'has-errors-input' : '') } >
+								className={ "pointer list-drop-noeffect flex-1 flex-dir-col " 
+										+ (this.state.expand ? 'flex' : 'hidden')
+										+ (this.errors.length ? 'has-errors-input' : '') } >
 								<div 
 									className="p-3 flex-1"
 									onClick={ e => this.clearInput() } >{ this.props.placeHolder }</div>
@@ -110,8 +94,6 @@ export default class InputSelectList extends Component {
 										</div>
 								} ) }
 							</div>
-						</>
-					}
 				</div>
 				<div className="flex-1"></div>
 			</div>
