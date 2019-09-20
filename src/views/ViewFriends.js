@@ -29,7 +29,7 @@ export default class ViewFriends extends Component {
 				'more_options': 'More options',
 				'less_options': 'Hide options',
 				'filter_on_name': 'Filter on name',
-				'time_filter': 'Filter friends on their local time',
+				'time_filter': 'Filter on local time',
 				'time_from': 'From',
 				'time_to': 'To'
 			},
@@ -38,7 +38,7 @@ export default class ViewFriends extends Component {
 				'more_options': 'Fler alternativ',
 				'less_options': 'Dölj alternativ',
 				'filter_on_name': 'Filtrera på namn',
-				'time_filter': 'Filtrera vänner på deras lokala tid', 
+				'time_filter': 'Filtrera på lokal tid', 
 				'time_from': 'Från',
 				'time_to': 'Till'
 			}
@@ -101,23 +101,22 @@ export default class ViewFriends extends Component {
 					placeHolder={ text['filter_on_name'] } />
 
 				<div className={ this.state.optionsExpanded ? 'flex flex-dir-row justify-center mb-3' : 'hidden' }>
-					<div className="flex-1"> </div>
 					<div className="flex-1 flex flex-dir-col"> 
 						
 						<div className="mb-3"> {text['time_filter']} </div>
 
-						<div className="flex flex-dir-row"> 
-							<div className="flex-1 flex">
+						<div className="flex flex-1 flex-dir-col justify-center">
+							<div>
 								<InputSelectList 
 									onInput={this.handleInput}
 									fieldname="from_time"
 									placeHolder={ text['time_from'] }
 									displayField={store.timeFormat}
 									items={ this.state.timeSpan } 
-								 />
+								/>
 							</div>
 
-							<div className="flex-1">
+							<div>
 								<InputSelectList 
 									onInput={this.handleInput}
 									fieldname="to_time"
@@ -129,12 +128,11 @@ export default class ViewFriends extends Component {
 						</div>
 
 					</div>
-					<div className="flex-1"> </div>
 				</div>
 
-					<button 
-						onClick={ e => this.toggleExpand() }
-						className="card-container p-2 orange mb-3 pointer">
+				<button
+					onClick={ e => this.toggleExpand() }
+					className="card-container p-2 orange mb-3 pointer">
 					{ !this.state.optionsExpanded ? text['more_options'] : text['less_options'] }
 				</button>
 
