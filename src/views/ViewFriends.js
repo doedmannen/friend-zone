@@ -29,30 +29,40 @@ export default class ViewFriends extends Component {
 				'more_options': 'More options',
 				'less_options': 'Hide options',
 				'filter_on_name': 'Filter on name',
+				'sort_on': 'Sorted on...',
 				'time_filter': 'Filter on local time',
 				'time_from': 'From',
-				'time_to': 'To'
+				'time_to': 'To',
+				'sorting_options': [
+					{ 'key': 'firstName', 'content': 'Sort on first name' },
+					{ 'key': 'lastName', 'content': 'Sort on last name' },
+					{ 'key': 'timeZone', 'content': 'Sort on time zone' }
+				]
 			},
 			'SE': {
 				'headline': 'Mina vänner',
 				'more_options': 'Fler alternativ',
 				'less_options': 'Dölj alternativ',
 				'filter_on_name': 'Filtrera på namn',
+				'sort_on': 'Sortera på...',
 				'time_filter': 'Filtrera på lokal tid', 
 				'time_from': 'Från',
-				'time_to': 'Till'
+				'time_to': 'Till',
+				'sorting_options': [
+					{ 'key': 'firstName', 'content': 'Sortera på förnamn' },
+					{ 'key': 'lastName', 'content': 'Sortera på efternamn' },
+					{ 'key': 'timeZone', 'content': 'Sortera på tidszon' }
+				]
 			}
 		},
 		timeSpan: [],
 		friends: [],
 		optionsExpanded: false,
-		filters: {
+		filterAndSort: {
 			'nameFilter': '',
-			'from_time': '',
-			'to_time': ''
-		},
-		sorters: {
-			'nameOrder': 'firstName'
+			'fromTime': '',
+			'toTime': '',
+			'sortOrder': {'key': 'firstName', 'content': 'I have the power'}
 		}
 	};
 
@@ -83,9 +93,10 @@ export default class ViewFriends extends Component {
 	}
 
 	handleInput(who, what){
-		let filters = this.state.filters; 
-		filters[who] = what
-		this.setState({ filters })
+		console.log(who, what)
+		let filterAndSort = this.state.filterAndSort; 
+		filterAndSort[who] = what;
+		this.setState({ filterAndSort })
 	}
 
 	toggleExpand(bool = !this.state.optionsExpanded){
@@ -93,15 +104,16 @@ export default class ViewFriends extends Component {
 	}
 
 	friendsManipulated(){
-		let o = this.state.friends, sorters = this.state.sorters; 
+		let o = this.state.friends, fas = this.state.filterAndSort;
+		console.log(fas.sortOrder)
 		o = o.filter(f => { 
-			return f.firstName.concat(` ${f.lastName}`).toLowerCase().includes(this.state.filters.nameFilter.toLowerCase())
+			return f.firstName.concat(` ${f.lastName}`).toLowerCase().includes(fas.nameFilter.toLowerCase())
 		});
-		if(sorters.nameOrder === 'firstName'){
+		if(fas.sortOrder.key === 'firstName'){
 			o = o.sort((a, b) => (`${a.firstName} | ${a.lastName}`.toLowerCase()).localeCompare(`${b.firstName}  || ${b.lastName}`.toLowerCase()))
-		} else if(sorters.nameOrder === 'lastName'){
+		} else if(fas.sortOrder.key === 'lastName'){
 			o = o.sort((a, b) => (`${a.lastName} | ${a.firstName}`.toLowerCase()).localeCompare(`${b.lastName} | ${b.firstName}`.toLowerCase()))
-		} else if(sorters.nameOrder === 'timeZone'){
+		} else if(fas.sortOrder.key === 'timeZone'){
 			o = o.sort((a, b) => (`${a.timeZone.name.replace(/ /g, '_')} | ${a.firstName} | ${a.lastName}`.toLowerCase()).localeCompare(`${b.timeZone.name.replace(/ /g, '_')} | ${a.firstName} | ${a.lastName}`.toLowerCase()))
 		}
 		return o;
@@ -114,30 +126,44 @@ export default class ViewFriends extends Component {
 				<div className="text-300 mb-3">{text['headline']}</div>
 				
 				<InputTextField 
-					onInput={this.handleInput} 
+					onInput={ this.handleInput } 
 					fieldName="nameFilter"
 					placeHolder={ text['filter_on_name'] } />
 
+
 				<div className={ this.state.optionsExpanded ? 'flex flex-dir-row justify-center mb-3' : 'hidden' }>
 					<div className="flex-1 flex flex-dir-col"> 
-						
+
+
+
 						<div className="mb-3"> {text['time_filter']} </div>
 
 						<div className="flex flex-1 flex-dir-col justify-center">
+
+						<div>
+							<InputSelectList 
+								onInput={ this.handleInput }
+								fieldName="sortOrder"
+								placeHolder={ this.state.translations[store.lang]['sort_on'] } 
+								displayField="content" 
+								items={ this.state.translations[store.lang].sorting_options } />
+						</div>
+
+
 							<div>
 								<InputSelectList 
-									onInput={this.handleInput}
-									fieldname="from_time"
+									onInput={ this.handleInput }
+									fieldname="fromTime"
 									placeHolder={ text['time_from'] }
-									displayField={store.timeFormat}
+									displayField={ store.timeFormat }
 									items={ this.state.timeSpan } 
 								/>
 							</div>
 
 							<div>
 								<InputSelectList 
-									onInput={this.handleInput}
-									fieldname="to_time"
+									onInput={ this.handleInput }
+									fieldname="toTime"
 									placeHolder={ text['time_to'] }
 									displayField={ store.timeFormat }
 									items={ this.state.timeSpan } 
@@ -150,12 +176,16 @@ export default class ViewFriends extends Component {
 
 				<button
 					onClick={ e => this.toggleExpand() }
-					className="card-container p-2 orange mb-3 pointer">
-					{ !this.state.optionsExpanded ? text['more_options'] : text['less_options'] }
+					className="card-container p-3 orange mb-3 pointer">
+					{ (!this.state.optionsExpanded ? text['more_options'] : text['less_options']).toUpperCase() }
 				</button>
 
 				{ this.friendsManipulated().map((item, index) => {
-					return <FriendDisplay friend={item} key={item._id} /> 
+					return <FriendDisplay 
+										friend={ item } 
+										limitStart={ this.state.filterAndSort.fromTime } 
+										limitStop={ this.state.filterAndSort.toTime } 
+										key={ item._id } /> 
 				}) }
 			</div>	
 		);
