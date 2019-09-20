@@ -50,6 +50,9 @@ export default class ViewFriends extends Component {
 			'nameFilter': '',
 			'from_time': '',
 			'to_time': ''
+		},
+		sorters: {
+			'nameOrder': 'firstName'
 		}
 	};
 
@@ -87,6 +90,21 @@ export default class ViewFriends extends Component {
 
 	toggleExpand(bool = !this.state.optionsExpanded){
 		this.setState({optionsExpanded: bool}); 
+	}
+
+	friendsManipulated(){
+		let o = this.state.friends, sorters = this.state.sorters; 
+		o = o.filter(f => { 
+			return f.firstName.concat(` ${f.lastName}`).toLowerCase().includes(this.state.filters.nameFilter.toLowerCase())
+		});
+		if(sorters.nameOrder === 'firstName'){
+			o = o.sort((a, b) => (`${a.firstName} | ${a.lastName}`.toLowerCase()).localeCompare(`${b.firstName}  || ${b.lastName}`.toLowerCase()))
+		} else if(sorters.nameOrder === 'lastName'){
+			o = o.sort((a, b) => (`${a.lastName} | ${a.firstName}`.toLowerCase()).localeCompare(`${b.lastName} | ${b.firstName}`.toLowerCase()))
+		} else if(sorters.nameOrder === 'timeZone'){
+			o = o.sort((a, b) => (`${a.timeZone.name.replace(/ /g, '_')} | ${a.firstName} | ${a.lastName}`.toLowerCase()).localeCompare(`${b.timeZone.name.replace(/ /g, '_')} | ${a.firstName} | ${a.lastName}`.toLowerCase()))
+		}
+		return o;
 	}
 
 	render(){
@@ -136,10 +154,7 @@ export default class ViewFriends extends Component {
 					{ !this.state.optionsExpanded ? text['more_options'] : text['less_options'] }
 				</button>
 
-				{ this.state.friends
-						.filter(f => { 
-							return f.firstName.concat(` ${f.lastName}`).toLowerCase().includes(this.state.filters.nameFilter.toLowerCase())
-						}).map((item, index) => {
+				{ this.friendsManipulated().map((item, index) => {
 					return <FriendDisplay friend={item} key={item._id} /> 
 				}) }
 			</div>	
