@@ -64,6 +64,13 @@ export default class InputSelectList extends Component {
 		}
 	}	
 
+	clearInput(){
+		this.errors.lengt = 0; 
+		let input = '', display = '';
+		this.setState( { input, display } ); 
+		this.props.onInput(this.props.fieldName, '');
+	}
+
 	validateInput(){
 		if(this.state.input === null && this.props.requiredField){
 			this.errors.push(`${this.state.translations[store.lang].required}`)
@@ -72,7 +79,6 @@ export default class InputSelectList extends Component {
 	}
 
 	render(){
-		console.log(this.props.key, this.props.items)
 		let errorText = this.errors[0] || 'No errors';
 		return(
 			<div className="flex flex-dir-row mb-3">
@@ -94,8 +100,11 @@ export default class InputSelectList extends Component {
 						<>
 							<div 
 								className={ "pointer list-drop-noeffect flex-1 flex flex-dir-col " + (this.errors.length ? 'has-errors-input' : '') } >
-								<div className="p-3 flex-1">{ this.props.placeHolder }</div>
-								{ this.props.items.map((item, index) => {
+								<div 
+									className="p-3 flex-1"
+									onClick={ e => this.clearInput() } >{ this.props.placeHolder }</div>
+
+									{ this.props.items.map((item, index) => {
 									return <div className="p-3 flex-1 listing-item" onClick={ e => this.reactOnInput(item) } key={index}> 
 										{ ( this.props.displayField ? item[this.props.displayField] : item ) } 
 										</div>
