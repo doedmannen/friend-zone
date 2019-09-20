@@ -102,7 +102,8 @@ export default class FriendDisplay extends Component {
 					<div className="flex-5">
 						<div>
 							<div>{status} {this.props.friend.firstName} {this.props.friend.lastName} </div>
-							<div>{ this.props.friend.country } { this.props.friend.city }</div>
+							<div>{ this.props.friend.country }, { this.props.friend.city }</div>
+							<div>{this.props.friend.timeZone.name}</div>
 						</div>
 						<div className="digital-time">
 							{ date } 
