@@ -16,22 +16,27 @@ export default class InputSelectList extends Component {
 		store.unSub(this.storeSub)
 	}
 
-	toggleExpand(bool){
-		if(typeof bool === 'boolean'){
+	toggleExpand(e, bool){
+		if(typeof bool === 'boolean' && this.state.expand !== bool){
 			this.setState({ expand: bool })
 		} else {
 			this.setState({ expand: !this.state.expand });
 		}
-		if(!this.state.expand){
+		if(bool){
 			// Scroll down on expand
 			setTimeout(() =>{
 				window.scrollTo(0, window.scrollY+(window.innerHeight*0.20))	
-			},2);
+			}, 1);
+		} else {
+			setTimeout(() => {
+				window.scrollTo(0, window.scrollY-(window.innerHeight*0.20))
+			}, 1);
 		}
 	}
 
 	state = {
 		'input': '',
+		'display': '',
 		'expand': false,
 		'translations': {
 			'EN': {
@@ -44,17 +49,16 @@ export default class InputSelectList extends Component {
 	}
 
 	display(){
-		return this.props.displayField ? this.state.input[this.props.displayField] : this.state.input;
-	}; 
+		return 	}; 
 
-	timer = null; 
 
 	errors = []; 
 
 	reactOnInput(item){
 		// Clear errors 
 		this.errors.length = 0; 
-		this.setState( { input: item } ); 
+		let input = item, display = this.props.displayField ? item[this.props.displayField] : item;
+		this.setState( { input, display } ); 
 		if(this.validateInput){
 			this.props.onInput(this.props.fieldName, item);
 		}
@@ -68,6 +72,7 @@ export default class InputSelectList extends Component {
 	}
 
 	render(){
+		console.log(this.props.key, this.props.items)
 		let errorText = this.errors[0] || 'No errors';
 		return(
 			<div className="flex flex-dir-row mb-3">
@@ -75,13 +80,12 @@ export default class InputSelectList extends Component {
 				<div className="flex-3 flex flex-dir-col">
 					<input type="text" 
 						className={ "pointer card-container input-text-field p-3 flex-1 " + (this.errors.length ? 'has-errors-input' : '') }
-						value={ this.display() }
-						style={this.state.expand ? { 'z-index': '-100', position: 'absolute' } : {} }
+						defaultValue={ this.state.display }
+						style={this.state.expand ? { 'zIndex': '-100', position: 'absolute' } : {} }
 						placeholder={ this.props.placeHolder }
-						readonly="readonly"
-						onBlur={ e => this.toggleExpand(false) }
-						onFocus={ e => this.toggleExpand(true) }
-						onClick={ e => this.toggleExpand() } />	
+						onBlur={ e => setTimeout(() => {this.toggleExpand(e, false)}, 500) }
+						onFocus={ e => this.toggleExpand(e, true) }
+						onClick={ e => this.toggleExpand(e, true) } />	
 						<div className={ "pt-1 input-error-text text-100 " + (this.errors.length ? 'block' : 'hidden') }>{ errorText }</div>
 
 					{ !this.state.expand ?
@@ -89,11 +93,12 @@ export default class InputSelectList extends Component {
 						: 
 						<>
 							<div 
-								className={ "pointer list-drop-noeffect flex-1 " + (this.errors.length ? 'has-errors-input' : '') }
-								onClick={ e => this.toggleExpand() }>
-								<div className="p-3">{ this.props.placeHolder }</div>
+								className={ "pointer list-drop-noeffect flex-1 flex flex-dir-col " + (this.errors.length ? 'has-errors-input' : '') } >
+								<div className="p-3 flex-1">{ this.props.placeHolder }</div>
 								{ this.props.items.map((item, index) => {
-									return <div className="p-3 listing-item" onClick={ e => this.reactOnInput(item) } key={index}>{item.name} ({item.short})</div>
+									return <div className="p-3 flex-1 listing-item" onClick={ e => this.reactOnInput(item) } key={index}> 
+										{ ( this.props.displayField ? item[this.props.displayField] : item ) } 
+										</div>
 								} ) }
 							</div>
 						</>
