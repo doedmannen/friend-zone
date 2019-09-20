@@ -340,6 +340,11 @@ a:active > *, a:hover > *, a:active, a:hover{
 /*
  * Input 
  * */
+
+input:focus, button:focus{
+	outline: none; 
+}
+
 .input-text-field{
 
 }
