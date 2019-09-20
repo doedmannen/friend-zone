@@ -3,9 +3,12 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types;
 
 let friendSchema = new Schema({
-	name: String,
+	firstName: String,
+	lastName: String, 
 	country: String, 
-	city: String, 
+	city: String,
+	phone: [String], 
+	email: [String],
 	timeZone: {type: ObjectId, ref: 'TimeZone'}
 });
 
