@@ -369,16 +369,16 @@ input:focus, button:focus{
  * Colors
  * */
 .red{
-	background-color: red; 
+	background-color: #aa2222; 
 }
-.yellow{
-	background-color: yellow; 
+.orange{
+	background-color: #bb5522; 
 }
 .green{
-	background-color: green; 
+	background-color: #22aa22; 
 }
 .blue{
-	background-color: blue;
+	background-color: #2222aa;
 }
 
 /*
