@@ -95,7 +95,7 @@ export default class FriendDisplay extends Component {
 				<div className="flex-1"></div>	
 				<div className={containerSize + ' flex flex-dir-row p-3 card-container pointer'}>
 					
-					<div className="flex-2 flex justify-center">
+					<div className="flex-2 flex justify-center align-items-center">
 						<Clock key={Math.random()} size="50" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
 					</div>
 					
@@ -103,7 +103,7 @@ export default class FriendDisplay extends Component {
 						<div>
 							<div>{status} {this.props.friend.firstName} {this.props.friend.lastName} </div>
 							<div>{ this.props.friend.country }, { this.props.friend.city }</div>
-							<div>{this.props.friend.timeZone.name}</div>
+							<div className="text-100">{`${this.props.friend.timeZone.name} ${this.props.friend.timeZone.short}`}</div>
 						</div>
 						<div className="digital-time">
 							{ date } 
