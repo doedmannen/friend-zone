@@ -160,8 +160,8 @@ export default class FriendDisplay extends Component {
 					onClick={e => this.toggleFriendExpand() }
 					className={containerSize + ' flex flex-dir-col p-3 card-container pointer'}>
 					
-					<div className="flex flex-2 flex-dir-row">	
-					<div className="flex-2 flex justify-center align-items-center">
+					<div className="flex flex-1 flex-dir-row">	
+					<div className="flex-1 flex justify-center align-items-center">
 						<Clock size="50" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
 					</div>
 					

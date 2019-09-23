@@ -38,16 +38,20 @@ export default class Home extends Component {
 	render(){
 		let text = this.state.translations[store.lang]; 
 		return(
-			<div className="pl-5 pr-5">
-				<div className="text-300 mb-3">
-					{ text['headline'] }
+			<div className="flex">
+				<div className="flex-1"></div>
+				<div className={ store.screenSize.isMDorAbove ? 'flex-2' : 'flex-10' }>
+					<div className="text-300 mb-3">
+						{ text['headline'] }
+					</div>
+					<div className="mb-2">
+						{ text['text-1'] }
+					</div>
+					<div className="mb-2">
+						{ text['text-2'] }
+					</div>
 				</div>
-				<div className="mb-2">
-					{ text['text-1'] }
-				</div>
-				<div className="mb-2">
-					{ text['text-2'] }
-				</div>
+				<div className="flex-1"></div>
 			</div>	
 		);
 	}
