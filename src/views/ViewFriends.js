@@ -97,6 +97,7 @@ export default class ViewFriends extends Component {
 		let filterAndSort = this.state.filterAndSort; 
 		filterAndSort[who] = what;
 		this.setState({ filterAndSort })
+		console.log(this.state.filterAndSort)
 	}
 
 	toggleExpand(bool = !this.state.optionsExpanded){
@@ -105,7 +106,6 @@ export default class ViewFriends extends Component {
 
 	friendsManipulated(){
 		let o = this.state.friends, fas = this.state.filterAndSort;
-		console.log(fas.sortOrder)
 		o = o.filter(f => { 
 			return f.firstName.concat(` ${f.lastName}`).toLowerCase().includes(fas.nameFilter.toLowerCase())
 		});
@@ -118,6 +118,16 @@ export default class ViewFriends extends Component {
 		}
 		return o;
 	}
+
+	getStartLimit(){
+		let time = this.state.filterAndSort.fromTime; 
+		return time ? (time['24HOUR'].replace(/:/gi, "") / 1) : null; 
+	}
+	getStopLimit(){
+		let time = this.state.filterAndSort.toTime;
+		return time ? (time['24HOUR'].replace(/:/gi, "") / 1) : null; 
+	}
+
 
 	render(){
 		let text = this.state.translations[store.lang]; 
@@ -136,7 +146,6 @@ export default class ViewFriends extends Component {
 
 
 
-						<div className="mb-3"> {text['time_filter']} </div>
 
 						<div className="flex flex-1 flex-dir-col justify-center">
 
@@ -148,12 +157,15 @@ export default class ViewFriends extends Component {
 								displayField="content" 
 								items={ this.state.translations[store.lang].sorting_options } />
 						</div>
+						
+
+						<div className="mb-3"> {text['time_filter']} </div>
 
 
 							<div>
 								<InputSelectList 
 									onInput={ this.handleInput }
-									fieldname="fromTime"
+									fieldName="fromTime"
 									placeHolder={ text['time_from'] }
 									displayField={ store.timeFormat }
 									items={ this.state.timeSpan } 
@@ -163,7 +175,7 @@ export default class ViewFriends extends Component {
 							<div>
 								<InputSelectList 
 									onInput={ this.handleInput }
-									fieldname="toTime"
+									fieldName="toTime"
 									placeHolder={ text['time_to'] }
 									displayField={ store.timeFormat }
 									items={ this.state.timeSpan } 
@@ -183,8 +195,8 @@ export default class ViewFriends extends Component {
 				{ this.friendsManipulated().map((item, index) => {
 					return <FriendDisplay 
 										friend={ item } 
-										limitStart={ this.state.filterAndSort.fromTime } 
-										limitStop={ this.state.filterAndSort.toTime } 
+										limitStart={ this.getStartLimit() } 
+										limitStop={ this.getStopLimit() } 
 										key={ item._id } /> 
 				}) }
 			</div>	

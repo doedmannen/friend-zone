@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';                
 import store from '../util/Store'; 
 import Clock from './Clock';
 
@@ -9,7 +9,10 @@ import './FriendDisplay.css';
 
 export default class FriendDisplay extends Component {
 
-	state = { time: this.calcFriendTime() };
+	state = { 
+		time: this.calcFriendTime(),
+		hideMe: false
+	};
 
 	sleep(ms){
 		return new Promise((res,rej) => setTimeout(res, ms));
@@ -18,6 +21,7 @@ export default class FriendDisplay extends Component {
 	async updateClock(){
 		while(this._isMounted){
 			this.setState({ time: this.calcFriendTime() });
+			this.filterCheck();
 			await this.sleep(500);
 		}
 	}
@@ -25,7 +29,7 @@ export default class FriendDisplay extends Component {
 
 
 	calcFriendTime(){
-		let t = this.props.friend.timeZone, time, analog, dst;
+		let o, t = this.props.friend.timeZone, time, analog, dst;
 
 		dst = t.dst && Date.now() > t.dst_from && Date.now() < t.dst_to;
 
@@ -35,10 +39,28 @@ export default class FriendDisplay extends Component {
 
 		analog = ((time[time.length-1].match(/\d{1,2}:?/g)[0].replace(/[^\d]/g, "").replace(/12/, "0") / 1) * 3600) + ((time[time.length-1].match(/\d{1,2}:?/g)[1].replace(/[^\d]/g, "") / 1) * 60) + (time[time.length-1].match(/\d{1,2}:?/g)[2].replace(/[^\d]/g, "") / 1); 
 
-		return {YEAR: time[0], MONTH: time[1], DAY: time[2], TIME24: time[3], TIME12: time[4], TIMEANALOGDEGREE: {HOUR: ((analog * (360 / 43200))%360), MINUTE: ((analog * (360 / 3600))%360), SECOND: ((analog * (360 / 60))%360)}}
-		
+		return {YEAR: time[0], MONTH: time[1], DAY: time[2], TIME24: time[3], TIME12: time[4], RAWHM: (time[3].replace(/:|\d\d$/gi, "") / 1), TIMEANALOGDEGREE: {HOUR: ((analog * (360 / 43200))%360), MINUTE: ((analog * (360 / 3600))%360), SECOND: ((analog * (360 / 60))%360)}};
+
 	}
 
+	filterCheck(){
+		let hideMe = false, raw = this.state.time.RAWHM, start = this.props.limitStart, stop = this.props.limitStop; 
+		if(start !== null && stop !== null){
+			if(start < stop){
+				if(raw < start || raw > stop){
+					hideMe = true;  
+				}
+			} else if(stop < start){
+				if(raw < start && raw > stop){
+					hideMe = true; 
+				}	
+			}
+		}
+		if(hideMe !== this.state.hideMe){
+			this.setState({ hideMe })
+		}		
+	
+	}
 
 
 	componentDidMount(){
@@ -90,8 +112,9 @@ export default class FriendDisplay extends Component {
 		time += store.timeFormat === '24HOUR' ? this.state.time.TIME24 : this.state.time.TIME12;  
 		status = <i className="fas fa-bed"></i> ;
 
+
 		return(
-			<div className="flex flex-dir-row justify-center mb-3">
+			<div className={this.state.hideMe ? 'hidden' : 'flex flex-dir-row justify-center mb-3 '}>
 				<div className="flex-1"></div>	
 				<div className={containerSize + ' flex flex-dir-row p-3 card-container pointer'}>
 					
