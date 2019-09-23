@@ -89,6 +89,7 @@ export default class AddFriend extends Component {
 		}
 		let friend = new Friend(this.state.inputFromFields);
 		await friend.save();
+		this.props.history.push('/myFriends'); 
 	}
 
 	printTimeZones(){
