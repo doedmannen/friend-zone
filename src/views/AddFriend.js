@@ -57,7 +57,9 @@ export default class AddFriend extends Component {
 			'country': undefined,
 			'city': undefined,
 			'timeZone': undefined
-		}
+		},
+		formClear: false, 
+		formValidate: false
 	};
 
 	async componentDidMount(){
@@ -84,6 +86,8 @@ export default class AddFriend extends Component {
 	}
 
 	async submit(){
+		this.setState({ formValidate: true }); 
+		setTimeout(() => { this.setState({ formValidate: false }) }, 1)
 		for(let k in this.state.inputFromFields){
 			if(!this.state.inputFromFields[k]) return; 
 		}
@@ -101,6 +105,11 @@ export default class AddFriend extends Component {
 		return null; 
 	}
 
+	clearAllFields(){
+		this.setState({ formClear: true });
+		setTimeout(() => {this.setState({formClear: false})}, 1)
+	}
+
 	render(){
 		let text = this.state.translations[store.lang];
 		let inputNames = this.state.translations[store.lang]['input_fields'];
@@ -115,6 +124,8 @@ export default class AddFriend extends Component {
 					fieldName="firstName" 
 					placeHolder={ inputNames['firstName'] }
 					max={20}
+					clear={ this.state.formClear }
+					validate={ this.state.formValidate }
 					requiredField={true} />
 
 				<InputTextField 
@@ -122,6 +133,8 @@ export default class AddFriend extends Component {
 					fieldName="lastName" 
 					placeHolder={ inputNames['lastName'] }
 					max={30}
+					clear={ this.state.formClear }
+					validate={ this.state.formValidate }
 					requiredField={true} />
 
 				<InputTextField 
@@ -129,6 +142,8 @@ export default class AddFriend extends Component {
 					fieldName="country" 
 					placeHolder={ inputNames['country'] }
 					max={25}
+					clear={ this.state.formClear }
+					validate={ this.state.formValidate }
 					requiredField={true} />
 
 				<InputTextField 
@@ -136,6 +151,8 @@ export default class AddFriend extends Component {
 					fieldName="city" 
 					placeHolder={ inputNames['city'] }
 					max={25}
+					clear={ this.state.formClear }
+					validate={ this.state.formValidate }
 					requiredField={true} />
 
 				<InputSelectList 
@@ -143,7 +160,10 @@ export default class AddFriend extends Component {
 					fieldName="timeZone"
 					placeHolder={ inputNames['timeZone']}
 					displayField="name"
-					items={ this.state.timeZones }/>
+					clear={ this.state.formClear }
+					validate={ this.state.formValidate }
+					requiredField={ true }
+					items={ this.state.timeZones } />
 
 
 				<div className="flex">
@@ -152,6 +172,10 @@ export default class AddFriend extends Component {
 						<button 
 							className="card-container p-3 pr-5 pl-5 pointer green ml-2"
 							onClick={e => this.submit()}> { text['button_ok'] }
+						</button>
+						<button 
+							className="card-container p-3 pr-5 pl-5 pointer red ml-2"
+							onClick={e => this.clearAllFields()}> { text['button_clear'] }
 						</button>
 						
 					</div>

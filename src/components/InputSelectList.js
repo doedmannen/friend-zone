@@ -15,6 +15,19 @@ export default class InputSelectList extends Component {
 	componentWillUnmount(){
 		store.unSub(this.storeSub)
 	}
+	
+	componentDidUpdate(){
+		if(this.props.clear){
+			setTimeout(() =>{
+				this.clearInput(); 	
+			}, 1);
+		}
+		if(this.props.validate){
+			setTimeout(() =>{
+				this.validateInput(); 
+			}, 1);
+		}
+	}
 
 	toggleExpand(e, bool){
 		if(typeof bool === 'boolean' && this.state.expand !== bool){
@@ -51,16 +64,17 @@ export default class InputSelectList extends Component {
 	}	
 
 	clearInput(){
-		this.errors.lengt = 0; 
+		this.errors.length = 0; 
 		let input = '', display = '';
 		this.setState( { input, display } ); 
 		this.props.onInput(this.props.fieldName, '');
 	}
 
 	validateInput(){
-		if(this.state.input === null && this.props.requiredField){
+		if(this.state.input === '' && this.props.requiredField){
 			this.errors.push(`${this.state.translations[store.lang].required}`)
 		}
+		this.setState({})
 		return !this.errors.length;
 	}
 
@@ -75,15 +89,15 @@ export default class InputSelectList extends Component {
 						defaultValue={ this.state.display }
 						style={this.state.expand ? { 'zIndex': '-100', position: 'absolute' } : {} }
 						placeholder={ this.props.placeHolder }
-						onBlur={ e => setTimeout(() => {this.toggleExpand(e, false)}, 500) }
+						onBlur={ e => setTimeout(() => {this.toggleExpand(e, false)}, 200) }
 						onFocus={ e => this.toggleExpand(e, true) }
 						onClick={ e => this.toggleExpand(e, true) } />	
-						<div className={ "pt-1 input-error-text text-100 " + (this.errors.length ? 'block' : 'hidden') }>{ errorText }</div>
+						<div className={ "pt-1 input-error-text text-100 " + (this.errors.length && !this.state.expand ? 'block' : 'hidden') }>{ errorText }</div>
 
 							<div 
 								className={ "pointer list-drop-noeffect flex-1 flex-dir-col " 
 										+ (this.state.expand ? 'flex' : 'hidden')
-										+ (this.errors.length ? 'has-errors-input' : '') } >
+										+ (this.errors.length ? ' has-errors-input' : '') } >
 								<div 
 									className="p-3 flex-1"
 									onClick={ e => this.clearInput() } >{ this.props.placeHolder }</div>

@@ -30,7 +30,6 @@ export default class InputTextField extends Component {
 		}
 	}
 
-	timer = null; 
 
 	errors = []; 
 
@@ -38,38 +37,45 @@ export default class InputTextField extends Component {
 		// Clear errors 
 		this.errors.length = 0; 
 
-		// Validate timer
-		if(this.timer !== null) window.clearTimeout(this.timer);
 		// Save input since e seems to be fragile, also strip any whitespaces we dont need
-		let input = e.target.value.replace(/^[ ]*([^ ]?)|([^ ]?)[ ]*$|( )[ ]*/gi, '$1$2$3');
+		let input = e.target.value.replace(/^[ ]*([^ ]?)|([^ ]? )[ ]*$|( )[ ]*/gi, '$1$2$3');
+	
+		// Set state
+		this.setState({ input })
+		
+		if(this.validateInput(input)){
+			this.props.onInput(this.props.fieldName, input);
+		} else {
+			this.props.onInput(this.props.fieldName, undefined); 
+		}
+	}
 
-		// Wait until input is validated
-		this.timer = setTimeout(() => {
-			if(input !== this.state.input){
-				// Clear parent
-				this.props.onInput(this.props.fieldName, '');
-				// Set state
-				this.setState({ input })
-				if(this.validateInput()){
-					this.props.onInput(this.props.fieldName, this.state.input);
-				} else {
-					this.setState({});
-				}
-			}
-		}, 200);
+	componentDidUpdate(){
+		if(this.props.clear){
+			setTimeout(() =>{
+				this.errors.length = 0; 
+				this.setState({input: ''});
+				this.props.onInput(this.props.fieldName, this.state.input); 
+			}, 1);
+		}
+		if(this.props.validate){
+			setTimeout(() =>{
+				this.validateInput(); 
+			}, 1);
+		}
+	}
 
-	}	
-
-	validateInput(){
-		if(!this.state.input.length && this.props.requiredField){
+	validateInput(input = this.state.input){
+		if(!input.length && this.props.requiredField){
 			this.errors.push(`${this.state.translations[store.lang].required}`)
 		}
-		if(this.props.min && typeof this.props.min === 'number' && this.state.input.length < this.props.min){
+		if(this.props.min && typeof this.props.min === 'number' && input.length < this.props.min){
 			this.errors.push(`${this.state.translations[store.lang].min} ${this.props.min}`)
 		}
-		if(this.props.max && typeof this.props.max === 'number' && this.state.input.length > this.props.max){
+		if(this.props.max && typeof this.props.max === 'number' && input.length > this.props.max){
 			this.errors.push(`${this.state.translations[store.lang].max} ${this.props.max}`)
 		}
+		this.setState({}); 
 		return !this.errors.length;
 	}
 
@@ -82,7 +88,8 @@ export default class InputTextField extends Component {
 					<input type="text" 
 						className={ "card-container input-text-field p-3 flex-1 " + (this.errors.length ? 'has-errors-input' : '') }
 						onChange={ e => this.reactOnInput(e) }
-						placeholder={ this.props.placeHolder } />	
+						placeholder={ this.props.placeHolder }
+						value={this.state.input}/>	
 					<div className={ "pt-1 input-error-text text-100 " + (this.errors.length ? 'block' : 'hidden') }>{ errorText }</div>
 				</div>
 				<div className="flex-1"></div>
