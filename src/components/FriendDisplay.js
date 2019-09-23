@@ -11,7 +11,24 @@ export default class FriendDisplay extends Component {
 
 	state = { 
 		time: this.calcFriendTime(),
-		hideMe: false
+		hideMe: false,
+		expanded: false,
+		translations: {
+			'EN': {
+				'phone': 'Phone numbers', 
+				'no_phone': 'No phone numbers',
+				'email': 'Email',
+				'no_email': 'No email addresses',
+				'edit_friend': 'Edit friend'
+			},
+			'SE': {
+				'phone': 'Telefonnummer',
+				'no_phone': 'Inga telefonnummeri', 
+				'email': 'E-post', 
+				'no_email': 'Inga e-postadresser',
+				'edit_friend': 'Redigera vän'
+			}
+		}
 	};
 
 	sleep(ms){
@@ -79,6 +96,27 @@ export default class FriendDisplay extends Component {
 		this._isMounted = false;
 	}
 
+	toggleFriendExpand(){
+		let expanded = !this.state.expanded; 
+		this.setState({ expanded })
+	}
+
+	printAllPhoneNumbers(){
+		if(this.props.friend.phone.length){
+			return this.props.friend.phone.map(s => <div>{ s }</div>)
+		} else {
+			return <div><em>{ this.state.translations[store.lang].no_phone }</em></div>
+		}
+	}
+
+	printAllEmails(){
+		if(this.props.friend.email.length){
+			return this.props.friend.email.map(s => <div>{ s }</div>)
+		}else {
+			return <div><em>{ this.state.translations[store.lang].no_email }</em></div>
+		}
+	}
+
 
 	render(){
 		let containerSize, date = [], formatDate, time = " ", status;
@@ -118,8 +156,11 @@ export default class FriendDisplay extends Component {
 		return(
 			<div className={this.state.hideMe ? 'hidden' : 'flex flex-dir-row justify-center mb-3 '}>
 				<div className="flex-1"></div>	
-				<div className={containerSize + ' flex flex-dir-row p-3 card-container pointer'}>
+				<div
+					onClick={e => this.toggleFriendExpand() }
+					className={containerSize + ' flex flex-dir-col p-3 card-container pointer'}>
 					
+					<div className="flex flex-2 flex-dir-row">	
 					<div className="flex-2 flex justify-center align-items-center">
 						<Clock size="50" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
 					</div>
@@ -136,6 +177,36 @@ export default class FriendDisplay extends Component {
 						</div>
 					</div>
 				</div>
+
+				{
+					this.state.expanded ?
+						<div className="mt-3">
+							<div className="mt-2">
+									{ this.state.translations[store.lang].phone }
+							</div>
+							<div>
+								{ this.printAllPhoneNumbers() } 
+							</div>
+
+							<div className="mt-2">
+									{ this.state.translations[store.lang].email }
+							</div>
+							<div>
+								{ this.printAllEmails() }
+							</div>
+
+							<div className="pt-3">
+								<Link to={ '/editFriend/' + this.props.friend._id }>
+									<i className="fas fa-cog text-200 pr-3"></i> 
+									{ this.state.translations[store.lang].edit_friend }
+								</Link>
+							</div>
+						</div>
+					: 
+						null 
+				}
+
+				</div>		
 				<div className="flex-1"></div>
 			</div>	
 		);
