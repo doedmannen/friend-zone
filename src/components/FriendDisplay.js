@@ -57,6 +57,7 @@ export default class FriendDisplay extends Component {
 			}
 		}
 		if(hideMe !== this.state.hideMe){
+			this.props.onTimeHide(this.props.friend._id, hideMe)
 			this.setState({ hideMe })
 		}		
 	
@@ -64,6 +65,7 @@ export default class FriendDisplay extends Component {
 
 
 	componentDidMount(){
+		this.props.onTimeHide(this.props.friend._id, false)
 		this.storeSub = (changes) => {
 			this.setState( { } );
 		}
@@ -119,7 +121,7 @@ export default class FriendDisplay extends Component {
 				<div className={containerSize + ' flex flex-dir-row p-3 card-container pointer'}>
 					
 					<div className="flex-2 flex justify-center align-items-center">
-						<Clock key={Math.random()} size="50" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
+						<Clock size="50" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
 					</div>
 					
 					<div className="flex-5">

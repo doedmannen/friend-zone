@@ -18,8 +18,9 @@ export default class ViewFriends extends Component {
 	constructor(props){
 		super(props); 
 
-		// bind input handler 
+		// bind functions 
 		this.handleInput = this.handleInput.bind(this);
+		this.registerHidden = this.registerHidden.bind(this); 
 	}
 
 	state = { 
@@ -37,7 +38,9 @@ export default class ViewFriends extends Component {
 					{ 'key': 'firstName', 'content': 'Sort on first name' },
 					{ 'key': 'lastName', 'content': 'Sort on last name' },
 					{ 'key': 'timeZone', 'content': 'Sort on time zone' }
-				]
+				], 
+				'no_friends': 'You have no friends added', 
+				'no_match': 'No friend matches the filters'
 			},
 			'SE': {
 				'headline': 'Mina vänner',
@@ -52,11 +55,15 @@ export default class ViewFriends extends Component {
 					{ 'key': 'firstName', 'content': 'Sortera på förnamn' },
 					{ 'key': 'lastName', 'content': 'Sortera på efternamn' },
 					{ 'key': 'timeZone', 'content': 'Sortera på tidszon' }
-				]
+				],
+				'no_friends': 'Du har inga vänner tillagda', 
+				'no_match': 'Ingen vän matchar dina filter'
 			}
 		},
 		timeSpan: [],
 		friends: [],
+		friendsCollected: false,
+		hiddenFriends: [],
 		optionsExpanded: false,
 		filterAndSort: {
 			'nameFilter': '',
@@ -69,7 +76,7 @@ export default class ViewFriends extends Component {
 	async componentDidMount(){
 		// Get all friens
 		let friends = await Friend.find({}, {populate: ['timeZone']}); 
-		this.setState({ friends });
+		this.setState({ friends, friendsCollected: true });
 
 		this.buildTimeSpan(); 
 
@@ -93,11 +100,9 @@ export default class ViewFriends extends Component {
 	}
 
 	handleInput(who, what){
-		console.log(who, what)
 		let filterAndSort = this.state.filterAndSort; 
 		filterAndSort[who] = what;
 		this.setState({ filterAndSort })
-		console.log(this.state.filterAndSort)
 	}
 
 	toggleExpand(bool = !this.state.optionsExpanded){
@@ -128,6 +133,27 @@ export default class ViewFriends extends Component {
 		return time ? (time['24HOUR'].replace(/:/gi, "") / 1) : null; 
 	}
 
+
+	registerHidden(who, hide){
+		let hiddenFriends = this.state.hiddenFriends; 
+		if(hide){
+			hiddenFriends.push(who); 
+		} else {
+			hiddenFriends = hiddenFriends.filter(s => s !== who); 
+		}
+		this.setState({ hiddenFriends }); 
+	}
+
+	noResultsFeedback(){
+		if(this.state.friendsCollected){
+			if(!this.state.friends.length && this.state.friendsCollected) {
+				return <div>{ this.state.translations[store.lang].no_friends }</div>
+			} else if(!this.friendsManipulated().length || this.friendsManipulated().length === this.state.hiddenFriends.length) {
+				return <div>{ this.state.translations[store.lang].no_match }</div>
+			}
+		}
+		return null; 
+	}
 
 	render(){
 		let text = this.state.translations[store.lang]; 
@@ -197,8 +223,13 @@ export default class ViewFriends extends Component {
 										friend={ item } 
 										limitStart={ this.getStartLimit() } 
 										limitStop={ this.getStopLimit() } 
-										key={ item._id } /> 
+										key={ item._id }
+										onTimeHide={ this.registerHidden } /> 
 				}) }
+
+				{
+					this.noResultsFeedback() 
+				}
 			</div>	
 		);
 	}
