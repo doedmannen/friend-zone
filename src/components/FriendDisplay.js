@@ -103,17 +103,17 @@ export default class FriendDisplay extends Component {
 
 	printAllPhoneNumbers(){
 		if(this.props.friend.phone.length){
-			return this.props.friend.phone.map(s => <div>{ s }</div>)
+			return this.props.friend.phone.map((s, index) => <div key={ this.props.friend._id + index } className="text-50">{ s }</div>)
 		} else {
-			return <div><em>{ this.state.translations[store.lang].no_phone }</em></div>
+			return <div><em className="text-50">{ this.state.translations[store.lang].no_phone }</em></div>
 		}
 	}
 
 	printAllEmails(){
 		if(this.props.friend.email.length){
-			return this.props.friend.email.map(s => <div>{ s }</div>)
+			return this.props.friend.email.map((s, index) => <div key={this.props.friend._id + index} className="text-50">{ s }</div>)
 		}else {
-			return <div><em>{ this.state.translations[store.lang].no_email }</em></div>
+			return <div><em className="text-50">{ this.state.translations[store.lang].no_email }</em></div>
 		}
 	}
 
@@ -169,7 +169,7 @@ export default class FriendDisplay extends Component {
 						<div>
 							<div>{status} {this.props.friend.firstName} {this.props.friend.lastName} </div>
 							<div>{ this.props.friend.country }, { this.props.friend.city }</div>
-							<div className="text-100">{`${this.props.friend.timeZone.name} ${this.props.friend.timeZone.short}`}</div>
+							<div className="text-50">{`${this.props.friend.timeZone.name} ${this.props.friend.timeZone.short}`}</div>
 						</div>
 						<div className="digital-time">
 							{ date } 
