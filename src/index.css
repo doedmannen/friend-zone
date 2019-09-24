@@ -18,10 +18,26 @@
 }
 
 /*
+ * Text positions 
+ * */
+.text-center{
+	text-align: center;
+}
+.text-right{
+	text-align: right;
+}
+.text-left{
+	text-align: left; 
+}
+
+/*
  *Textsize
  * */
+.text-50{
+	font-size: 10pt;
+}
 .text-100{
-	font-size: 12px;
+	font-size: 12pt;
 }
 .text-200{
 	font-size: 16pt; 
@@ -348,6 +364,7 @@ a:active > *, a:hover > *, a:active, a:hover{
 input:focus, button:focus{
 	outline: none; 
 }
+
 
 .input-text-field{
 
