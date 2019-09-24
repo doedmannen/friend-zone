@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import store from '../util/Store'; 
 import InputTextField from '../components/InputTextField'; 
+import InputPhoneNumberField from '../components/InputPhoneNumberField'; 
+import InputEmailField from '../components/InputEmailField'; 
 import InputSelectList from '../components/InputSelectList';
 
 import TimeZone from '../mongo_schema/TimeZone';
@@ -55,6 +57,8 @@ export default class AddFriend extends Component {
 			'firstName': undefined, 
 			'lastName': undefined, 
 			'country': undefined,
+			'phone': undefined,
+			'email': undefined,
 			'city': undefined,
 			'timeZone': undefined
 		},
@@ -86,6 +90,7 @@ export default class AddFriend extends Component {
 	}
 
 	async submit(){
+		console.log(this.state.inputFromFields)
 		this.setState({ formValidate: true }); 
 		setTimeout(() => { this.setState({ formValidate: false }) }, 1)
 		for(let k in this.state.inputFromFields){
@@ -155,6 +160,26 @@ export default class AddFriend extends Component {
 					validate={ this.state.formValidate }
 					requiredField={true} />
 
+				<InputPhoneNumberField 
+					onInput={this.handleInput} 
+					fieldName="phone" 
+					placeHolder={ inputNames['phone'] }
+					max={20}
+					clear={ this.state.formClear }
+					validate={ this.state.formValidate }
+					requiredField={true} />
+
+				<InputEmailField 
+					onInput={this.handleInput} 
+					fieldName="email" 
+					placeHolder={ inputNames['email'] }
+					max={255}
+					clear={ this.state.formClear }
+					validate={ this.state.formValidate }
+					requiredField={true} />
+
+	
+
 				<InputSelectList 
 					onInput={this.handleInput}
 					fieldName="timeZone"
@@ -184,5 +209,6 @@ export default class AddFriend extends Component {
 		);
 	}
 }
+
 
 
