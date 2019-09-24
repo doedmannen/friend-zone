@@ -44,7 +44,7 @@ export default class InputTextField extends Component {
 		this.setState({ input })
 		
 		if(this.validateInput(input)){
-			this.props.onInput(this.props.fieldName, input);
+			this.props.onInput(this.props.fieldName, input.trim());
 		} else {
 			this.props.onInput(this.props.fieldName, undefined); 
 		}
