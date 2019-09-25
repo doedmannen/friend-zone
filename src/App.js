@@ -9,6 +9,7 @@ import Login from './views/Login';
 import Register from './views/Register'; 
 import ViewFriends from './views/ViewFriends'; 
 import AddFriend from './views/AddFriend'; 
+import EditFriend from './views/EditFriend'; 
 import Settings from './views/Settings'; 
 import SignOut from './views/SignOut'; 
 import Teapot from './views/Teapot';
@@ -68,6 +69,7 @@ export default class App extends Component {
 							<Route path="/register" component={Register} /> 
 							<Route path="/login" component={Login} /> 
 							<Route path="/signout" component={SignOut} /> 
+							<PrivateRoute exact path="/editFriend" component={EditFriend} /> 
 							<PrivateRoute exact path="/add" component={AddFriend} /> 
 							<PrivateRoute exact path="/myFriends" component={ViewFriends} /> 
 							<PrivateRoute exact path="/settings" component={Settings} /> 
