@@ -85,7 +85,7 @@ export default class InputTextField extends Component {
 			<div className="flex flex-dir-row mb-3">
 				<div className="flex-1"></div>
 				<div className="flex-3 flex flex-dir-col">
-					<input type="text" 
+					<input type={ this.props.password ? 'password' : 'text' }
 						className={ "card-container input-text-field p-3 flex-1 " + (this.errors.length ? 'has-errors-input' : '') }
 						onChange={ e => this.reactOnInput(e) }
 						placeholder={ this.props.placeHolder }
