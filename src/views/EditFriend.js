@@ -97,17 +97,14 @@ export default class EditFriend extends Component {
 	}
 
 	async submit(){
-		console.log("Start of submit"); 
 		this.setState({ formValidate: true }); 
 		setTimeout(() => { this.setState({ formValidate: false }) }, 1)
 		for(let k in this.state.inputFromFields){
 			if(!this.state.inputFromFields[k])return; 
 		}
-		console.log("loop is cleared") 
 		let friend = this.state.friend; 
 		Object.assign(friend, this.state.inputFromFields)
 		await friend.save();
-		console.log(friend);  
 		this.props.history.push('/myFriends'); 
 	}
 
@@ -120,10 +117,6 @@ export default class EditFriend extends Component {
 		return null; 
 	}
 
-	clearAllFields(){
-		this.setState({ formClear: true });
-		setTimeout(() => {this.setState({formClear: false})}, 1)
-	}
 
 	render(){
 		let text = this.state.translations[store.lang];
@@ -142,7 +135,6 @@ export default class EditFriend extends Component {
 						placeHolder={ inputNames['firstName'] }
 						preSetValue={ this.state.friend.firstName }
 						max={20}
-						clear={ this.state.formClear }
 						validate={ this.state.formValidate }
 						requiredField={true} />
 
@@ -152,7 +144,6 @@ export default class EditFriend extends Component {
 						placeHolder={ inputNames['lastName'] }
 						preSetValue={ this.state.friend.lastName }
 						max={30}
-						clear={ this.state.formClear }
 						validate={ this.state.formValidate }
 						requiredField={true} />
 
@@ -162,7 +153,6 @@ export default class EditFriend extends Component {
 						placeHolder={ inputNames['country'] }
 						preSetValue={ this.state.friend.country }
 						max={25}
-						clear={ this.state.formClear }
 						validate={ this.state.formValidate }
 						requiredField={true} />
 
@@ -172,7 +162,6 @@ export default class EditFriend extends Component {
 						placeHolder={ inputNames['city'] }
 						preSetValue={ this.state.friend.city }
 						max={25}
-						clear={ this.state.formClear }
 						validate={ this.state.formValidate }
 						requiredField={true} />
 
@@ -182,7 +171,6 @@ export default class EditFriend extends Component {
 						placeHolder={ inputNames['phone'] }
 						preSetItems={ this.state.friend.phone }
 						max={20}
-						clear={ this.state.formClear }
 						validate={ this.state.formValidate }
 						requiredField={true} />
 
@@ -192,7 +180,6 @@ export default class EditFriend extends Component {
 						placeHolder={ inputNames['email'] }
 						preSetItems={ this.state.friend.email }
 						max={255}
-						clear={ this.state.formClear }
 						validate={ this.state.formValidate }
 						requiredField={true} />
 
@@ -203,7 +190,6 @@ export default class EditFriend extends Component {
 						placeHolder={ inputNames['timeZone'] }
 						displayField="name"
 						preSetItem={ this.state.friend.timeZone }
-						clear={ this.state.formClear }
 						validate={ this.state.formValidate }
 						requiredField={ true }
 						items={ this.state.timeZones } />
