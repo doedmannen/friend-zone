@@ -2,12 +2,15 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import store from './util/Store'; 
 
+import PrivateRoute from './router/PrivateRoute'; 
+
 import Home from './views/Home'; 
 import Login from './views/Login';
 import Register from './views/Register'; 
 import ViewFriends from './views/ViewFriends'; 
 import AddFriend from './views/AddFriend'; 
 import Settings from './views/Settings'; 
+import SignOut from './views/SignOut'; 
 import Teapot from './views/Teapot';
 
 import './App.css';
@@ -62,11 +65,12 @@ export default class App extends Component {
 					<main className="main-application order-4 mt-4 pr-3 pl-3 mb-5 pb-5">
 						<Switch>
 							<Route path="/" exact component={Home} /> 
-							<Route path="/add" component={AddFriend} /> 
-							<Route path="/login" component={Login} /> 
 							<Route path="/register" component={Register} /> 
-							<Route path="/myFriends" component={ViewFriends} /> 
-							<Route path="/settings" component={Settings} /> 
+							<Route path="/login" component={Login} /> 
+							<Route path="/signout" component={SignOut} /> 
+							<PrivateRoute exact path="/add" component={AddFriend} /> 
+							<PrivateRoute exact path="/myFriends" component={ViewFriends} /> 
+							<PrivateRoute exact path="/settings" component={Settings} /> 
 							<Route component={Teapot} />
 						</Switch>
 					</main>
