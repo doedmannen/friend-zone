@@ -3,11 +3,12 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types;
 
 let userSchema = new Schema({
-	name: String,
+	username: String,
 	password: String, 
-	swe_lang: Boolean, 
-	timeformat12: Boolean, 
-	americanDate: Boolean
+	lang: String, 
+	timeFormat: String, 
+	dateFormat: String,
+	friends: [{type: ObjectId, ref: 'Friend'}]
 });
 
 class UserClass {
