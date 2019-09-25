@@ -75,7 +75,7 @@ export default class ViewFriends extends Component {
 
 	async componentDidMount(){
 		// Get all friens
-		let friends = await Friend.find({}, {populate: ['timeZone']}); 
+		let friends = await Friend.find({owner: store.user}, {populate: ['timeZone']}); 
 		this.setState({ friends, friendsCollected: true });
 
 		this.buildTimeSpan(); 
