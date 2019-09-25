@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import ScreenCalc from './util/ScreenCalc';
+import Auth from './util/Auth';
  
 import * as serviceWorker from './serviceWorker';
 
 ScreenCalc();	
+Auth(); 
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
