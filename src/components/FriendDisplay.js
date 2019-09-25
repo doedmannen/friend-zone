@@ -196,7 +196,7 @@ export default class FriendDisplay extends Component {
 							</div>
 
 							<div className="pt-3">
-								<Link to={ '/editFriend/' + this.props.friend._id }>
+								<Link to={ '/editFriend?id=' + this.props.friend._id }>
 									<i className="fas fa-cog text-200 pr-3"></i> 
 									{ this.state.translations[store.lang].edit_friend }
 								</Link>
