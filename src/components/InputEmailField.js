@@ -12,7 +12,10 @@ export default class InputEmailField extends Component {
 		if(this.props.preSetItems && Array.isArray(this.props.preSetItems)){
 			let input = this.props.preSetItems; 
 			input.push(""); 
-			this.setState({ input })
+			this.setState({ input }); 
+			setTimeout(() => {
+				this.reactOnCompletedInput(); 
+			}, 1); 
 		}
 	}
 
@@ -51,7 +54,7 @@ export default class InputEmailField extends Component {
 		
 	}
 
-	reactOnCompletedInput(e){
+	reactOnCompletedInput(){
 		let input = this.state.input.filter(s => s.length); 
 		if(this.validateInput(input)){
 			this.props.onInput(this.props.fieldName, input);
@@ -101,6 +104,7 @@ export default class InputEmailField extends Component {
 			let input = this.state.input; 
 			input.push('');
 			this.setState({input})
+			this.reactOnCompletedInput();
 		}
 	}
 
@@ -108,6 +112,7 @@ export default class InputEmailField extends Component {
 		let input = this.state.input; 
 		input.splice(index, 1); 
 		this.setState({input})
+		this.reactOnCompletedInput();
 	}
 	keyUpCheck(e){
 		if(e.key === 'Enter'){

@@ -13,6 +13,9 @@ export default class InputPhoneNumberField extends Component {
 			let input = this.props.preSetItems; 
 			input.push(""); 
 			this.setState({ input })
+			setTimeout(() => {
+				this.reactOnCompletedInput(); 
+			}, 1); 
 		}
 	}
 
@@ -51,7 +54,7 @@ export default class InputPhoneNumberField extends Component {
 		
 	}
 
-	reactOnCompletedInput(e){
+	reactOnCompletedInput(){
 		let input = this.state.input.filter(s => s.length).map(s => s.trim()); 
 		if(this.validateInput(input)){
 			this.props.onInput(this.props.fieldName, input);
@@ -100,7 +103,8 @@ export default class InputPhoneNumberField extends Component {
 		if(this.validateInput()){
 			let input = this.state.input; 
 			input.push('');
-			this.setState({input})
+			this.setState({input}); 
+			this.reactOnCompletedInput();
 		}
 	}
 
@@ -108,6 +112,7 @@ export default class InputPhoneNumberField extends Component {
 		let input = this.state.input; 
 		input.splice(index, 1); 
 		this.setState({input})
+		this.reactOnCompletedInput();
 	}
 	keyUpCheck(e){
 		if(e.key === 'Enter'){

@@ -8,6 +8,15 @@ export default class InputTextField extends Component {
 			this.setState( { } );
 		}
 		store.subTo(this.storeSub);
+
+		if(this.props.preSetValue){
+			setTimeout(() => {
+				let e = {}; 
+				e.target = {}; 
+				e.target.value = this.props.preSetValue; 
+				this.reactOnInput(e); 
+			}, 1); 
+		}
 	}
 
 	componentWillUnmount(){

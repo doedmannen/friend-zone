@@ -10,6 +10,10 @@ export default class InputSelectList extends Component {
 			this.setState( { } );
 		}
 		store.subTo(this.storeSub);
+		setTimeout(() => {
+			if(this.props.preSetItem)
+				this.reactOnInput(this.props.preSetItem)
+		}, 1)
 	}
 
 	componentWillUnmount(){
