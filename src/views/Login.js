@@ -86,7 +86,6 @@ export default class Login extends Component {
 
 		if(user_id) {
 			localStorage.setItem('user_id', user_id);
-			console.log(user_id); 
 			Auth();
 			this.props.history.push('/');
 		} else {
