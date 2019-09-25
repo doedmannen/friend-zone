@@ -112,6 +112,7 @@ export default class Login extends Component {
 						fieldName="username"
 						placeHolder={ this.state.translations[store.lang].username }
 						requiredField={ true }
+						noWhiteSpace={ true }
 						validate={ this.state.formValidate }
 					/>
 

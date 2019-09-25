@@ -37,14 +37,22 @@ export default class InputTextField extends Component {
 		// Clear errors 
 		this.errors.length = 0; 
 
-		// Save input since e seems to be fragile, also strip any whitespaces we dont need
-		let input = e.target.value.replace(/^[ ]*([^ ]?)|([^ ]? )[ ]*$|( )[ ]*/gi, '$1$2$3');
-	
+
+		let input = e.target.value; 
+
+		if(!this.props.password){
+			input = input.replace(/^[ ]*([^ ]?)|([^ ]? )[ ]*$|( )[ ]*/gi, '$1$2$3');
+		}
+
+		if(this.props.noWhiteSpace){
+			input = input.replace(/\s/gi, ''); 
+		}
+
 		// Set state
 		this.setState({ input })
 		
 		if(this.validateInput(input)){
-			this.props.onInput(this.props.fieldName, input.trim());
+			this.props.onInput(this.props.fieldName, this.props.password ? input : input.trim());
 		} else {
 			this.props.onInput(this.props.fieldName, undefined); 
 		}
