@@ -1,6 +1,6 @@
 import SuperMongo from './SuperMongo.js'; 
 
-export default class Friend extends SuperMongo{
+export default class User extends SuperMongo{
 
 }
 
