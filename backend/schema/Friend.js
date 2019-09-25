@@ -9,7 +9,8 @@ let friendSchema = new Schema({
 	city: String,
 	phone: [String], 
 	email: [String],
-	timeZone: {type: ObjectId, ref: 'TimeZone'}
+	timeZone: {type: ObjectId, ref: 'TimeZone'}, 
+	owner: {type: ObjectId, ref: 'User'}
 });
 
 class FriendClass {
