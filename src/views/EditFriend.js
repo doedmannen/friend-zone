@@ -25,7 +25,7 @@ export default class EditFriend extends Component {
 			'EN': {
 				'header': 'Edit friend',
 				'button_ok': 'SAVE',
-				'button_clear': 'REMOVE',
+				'button_remove': 'REMOVE',
 				'input_fields': {
 					'firstName': 'Firstname', 
 					'lastName': 'Lastname', 
@@ -39,7 +39,7 @@ export default class EditFriend extends Component {
 			'SE': {
 				'header': 'Redigera vän',
 				'button_ok': 'SPARA',
-				'button_clear': 'TA BORT', 
+				'button_remove': 'TA BORT', 
 				'input_fields': {
 					'firstName': 'Förnamn', 
 					'lastName': 'Efternamn', 
@@ -117,6 +117,10 @@ export default class EditFriend extends Component {
 		return null; 
 	}
 
+	async remove(){
+		await this.state.friend.delete(); 
+		this.props.history.push('/myFriends'); 
+	}
 
 	render(){
 		let text = this.state.translations[store.lang];
@@ -200,7 +204,7 @@ export default class EditFriend extends Component {
 							
 							<button 
 								className="card-container p-3 pr-5 pl-5 pointer red ml-2"
-								onClick={e => this.clearAllFields()}> { text['button_clear'] }
+								onClick={e => this.remove()}> { text['button_remove'] }
 							</button>
 							
 							<button 
