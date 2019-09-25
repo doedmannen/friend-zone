@@ -114,6 +114,7 @@ export default class Register extends Component {
 						onInput={ this.handleInput }
 						fieldName="username"
 						placeHolder={ this.state.translations[store.lang].username }
+						max={30}
 						requiredField={ true }
 						noWhiteSpace={ true }
 						validate={ this.state.formValidate }
@@ -124,6 +125,7 @@ export default class Register extends Component {
 						onInput={ this.handleInput }
 						fieldName="password"
 						placeHolder={ this.state.translations[store.lang].password }
+						max={255}
 						requiredField={ true }
 						validate={ this.state.formValidate }
 					/>
