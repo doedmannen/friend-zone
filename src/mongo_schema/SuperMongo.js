@@ -29,7 +29,7 @@ class SuperMongo{
 	 * */
 	async save(){
 		let r, url, method;
-		url = `${window.location.origin}/api/${this.constructor.name}`
+		url = `${window.location.origin}/api/crud/${this.constructor.name}`
 		url += this._id ? `/${this._id}` : ``; 
 		method = this._id ? 'PUT' : 'POST';
 		r = await fetch(url, {
@@ -59,7 +59,7 @@ class SuperMongo{
 	async delete(){
 		let r, method = 'DELETE', url;
 		if(this._id){
-			url = `${window.location.origin}/api/${this.constructor.name}/${this._id}` 
+			url = `${window.location.origin}/api/crud/${this.constructor.name}/${this._id}` 
 		} else {
 			console.log("deleted"); 
 		}
@@ -82,7 +82,7 @@ class SuperMongo{
 	 * 
 	 * */
 	static async find(o, e){
-		let query = this.validObject(o) ? o : {}, extra = this.validObject(e) ? e : {}, arrayOfObjects = null, baseUrl = `${window.location.origin}/api/${this.name}`, parsedArrayOfObjects = [];
+		let query = this.validObject(o) ? o : {}, extra = this.validObject(e) ? e : {}, arrayOfObjects = null, baseUrl = `${window.location.origin}/api/crud/${this.name}`, parsedArrayOfObjects = [];
 		
 		query = encodeURIComponent(JSON.stringify(query))
 		extra = encodeURIComponent(JSON.stringify(extra));
@@ -107,7 +107,7 @@ class SuperMongo{
 	 *
 	 * */
 	static async findOne(o, e){
-		let query = this.validObject(o) ? o : {}, extra = this.validObject(e) ? e : {}, instance = null, instanceFromDb = null, baseUrl = `${window.location.origin}/api/${this.name}`;
+		let query = this.validObject(o) ? o : {}, extra = this.validObject(e) ? e : {}, instance = null, instanceFromDb = null, baseUrl = `${window.location.origin}/api/crud/${this.name}`;
 		
 		query = encodeURIComponent(JSON.stringify(query));
 		extra = encodeURIComponent(JSON.stringify(extra));
