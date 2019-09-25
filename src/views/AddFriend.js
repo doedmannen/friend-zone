@@ -90,7 +90,6 @@ export default class AddFriend extends Component {
 	}
 
 	async submit(){
-		console.log(this.state.inputFromFields)
 		this.setState({ formValidate: true }); 
 		setTimeout(() => { this.setState({ formValidate: false }) }, 1)
 		for(let k in this.state.inputFromFields){
@@ -195,12 +194,13 @@ export default class AddFriend extends Component {
 					<div className="flex-1">
 						
 						<button 
-							className="card-container p-3 pr-5 pl-5 pointer green ml-2"
-							onClick={e => this.submit()}> { text['button_ok'] }
-						</button>
-						<button 
 							className="card-container p-3 pr-5 pl-5 pointer red ml-2"
 							onClick={e => this.clearAllFields()}> { text['button_clear'] }
+						</button>
+						
+						<button 
+							className="card-container p-3 pr-5 pl-5 pointer green ml-2"
+							onClick={e => this.submit()}> { text['button_ok'] }
 						</button>
 						
 					</div>
