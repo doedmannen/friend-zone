@@ -41,6 +41,7 @@ export default class InputSelectList extends Component {
 		'input': '',
 		'display': '',
 		'expand': false,
+		'value': '',
 		'translations': {
 			'EN': {
 				'required': 'This field is required', 
@@ -52,7 +53,7 @@ export default class InputSelectList extends Component {
 	}
 
 	errors = []; 
-
+	
 	reactOnInput(item){
 		// Clear errors 
 		this.errors.length = 0; 
@@ -78,6 +79,10 @@ export default class InputSelectList extends Component {
 		return !this.errors.length;
 	}
 
+	handleInput(e){
+		this.setState({ value: '' })
+	}
+
 	render(){
 		let errorText = this.errors[0] || 'No errors';
 		return(
@@ -86,12 +91,13 @@ export default class InputSelectList extends Component {
 				<div className="flex-3 flex flex-dir-col">
 					<input type="text" 
 						className={ "pointer card-container input-text-field p-3 flex-1 " + (this.errors.length ? 'has-errors-input' : '') }
-						defaultValue={ this.state.display }
+						value={ this.state.value || this.state.display }
 						style={this.state.expand ? { 'zIndex': '-100', position: 'absolute' } : {} }
 						placeholder={ this.props.placeHolder }
 						onBlur={ e => setTimeout(() => {this.toggleExpand(e, false)}, 200) }
 						onFocus={ e => this.toggleExpand(e, true) }
-						onClick={ e => this.toggleExpand(e, true) } />	
+						onClick={ e => this.toggleExpand(e, true) }
+						onChange={ e => this.handleInput(e) } />	
 						<div className={ "pt-1 input-error-text text-100 " + (this.errors.length && !this.state.expand ? 'block' : 'hidden') }>{ errorText }</div>
 
 							<div 
