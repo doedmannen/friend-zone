@@ -96,7 +96,9 @@ export default class AddFriend extends Component {
 			if(!this.state.inputFromFields[k]) return; 
 		}
 		let friend = new Friend(this.state.inputFromFields);
+		friend.owner = store.user; 
 		await friend.save();
+
 		this.props.history.push('/myFriends'); 
 	}
 
