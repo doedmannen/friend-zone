@@ -125,7 +125,7 @@ app.use(express.static('../build'));
  *
  * */
 
-app.post('/api/:collection', async (req, res) => {
+app.post('/api/crud/:collection', async (req, res) => {
 	let collection = getCollection(req.params.collection);
 	
 	if(collection){
@@ -147,7 +147,7 @@ app.post('/api/:collection', async (req, res) => {
  * Used on frontend as findOne by giving distinctFirst=true in query
  *
  * */
-app.get('/api/:collection', async (req, res) => {
+app.get('/api/crud/:collection', async (req, res) => {
 	let collection = getCollection(req.params.collection), query = parseQuery(req.query);
 
 	if(collection){
@@ -177,7 +177,7 @@ app.get('/api/:collection', async (req, res) => {
  * Used for getting single object by id
  *
  * */
-app.get('/api/:collection/:id', async (req, res) => {
+app.get('/api/crud/:collection/:id', async (req, res) => {
 	let collection = getCollection(req.params.collection); 
 	let id = stripId(req.params.id);
 	if(collection && id){
@@ -194,7 +194,7 @@ app.get('/api/:collection/:id', async (req, res) => {
  * Update objects in mongo
  *
  * */
-app.put('/api/:collection/:id', async (req, res) => {
+app.put('/api/crud/:collection/:id', async (req, res) => {
 	let collection = getCollection(req.params.collection); 
 	let id = stripId(req.params.id);
 	if(collection && id){
@@ -215,7 +215,7 @@ app.put('/api/:collection/:id', async (req, res) => {
  * Takes ObjectId and removes one object with that ObjectId 
  *
  * */
-app.delete('/api/:collection/:id', async (req, res) => {
+app.delete('/api/crud/:collection/:id', async (req, res) => {
 	let collection = getCollection(req.params.collection); 
 	let id = stripId(req.params.id);
 	if(collection && id){
@@ -224,6 +224,55 @@ app.delete('/api/:collection/:id', async (req, res) => {
 		res.status(500);
 		res.json({ error: !collection ? 'No such collection' : 'Invalid id format' });
 	}	
+});
+
+
+
+/*
+ *
+ * Login route
+ *
+ * */
+
+app.post('/api/auth', async (req, res) => {
+
+	let password, username, user; 
+	if(req.body.username && req.body.password) {
+		username = new RegExp(req.body.username ,'gi'); 
+		password = req.body.password; 
+
+		user = await collectionMap['user'].findOne({username, password}, {}, {populate: ['friends']});
+		if(user){
+			res.json({user_id: user._id});
+		} else {
+			res.status(403);
+			res.json({error: 'Failed'})
+		}
+	} else {
+		res.status(403);
+		res.json({error: 'Failed'});
+	}
+});
+
+
+/*
+ *
+ * Check if username is taken
+ *
+ * */
+
+app.get('/api/checkUsername/:username', async (req, res) => {
+
+	let username = new RegExp(req.params.username, 'gi');
+
+	let user = await collectionMap['user'].findOne({ username })
+
+	if(user){
+		res.json({isAvailable: false});
+	} else {
+		res.json({isAvailable: true});
+	}
+
 });
 
 
