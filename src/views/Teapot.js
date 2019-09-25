@@ -28,8 +28,8 @@ export default class Teapot extends Component {
 				<div className="text-300">
 					OOOPS! Something is wrong! 
 				</div>
-				<i class="fas fa-mug-hot text-500"></i>
-				<div classname="text-200">
+				<i className="fas fa-mug-hot text-500"></i>
+				<div className="text-200">
 					There is nothing here <br />
 					We've put on a kettle of tea for you while you wait. 
 				</div>
