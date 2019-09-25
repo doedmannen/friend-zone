@@ -85,3 +85,6 @@ yarn-error.log*
 
 # ignore vim swp
 *.swp
+
+# Super secret files
+SuperSecretAPIKey.js
