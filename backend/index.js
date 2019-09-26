@@ -1,4 +1,4 @@
-const { API_KEY } = require('./secrets/SuperSecretAPIKey'); 
+const { API_KEY_OCD, API_KEY_MOCK } = require('./secrets/SuperSecretAPIKey'); 
 
 const fetch = require('node-fetch'); 
 const express = require('express');
@@ -27,6 +27,7 @@ global.db = mongoose.connection;
 db.on('error', () => console.log('Could not connect to DB'));
 db.once('open', () => {
 	console.log('Connected to DB');
+	
  /*
   *
   * Do not start express until we 
@@ -109,6 +110,36 @@ function reconstructRegExp(rx){
 
 /*
  *
+ * Build friends from mockdata
+ *
+ * */
+async function buildFriends(user){
+	let friends; 
+	try{
+		friends = await ( await fetch(`https://my.api.mockaroo.com/friendzone.json?key=${API_KEY_MOCK}`)).json();
+		for(let friend of friends){
+			let timeZone = await collectionMap['timezone'].findOne({ name: friend.timezone.replace(/_/gi,' ') }); 
+			if(!timeZone) continue; // If timezone didnt match our data jump to the next one  
+			let f = new collectionMap['friend']({ 
+				firstName: friend.firstName, 
+				lastName: friend.lastName,
+				country: friend.country,
+				city: friend.city,
+				phone: [friend.phone1, friend.phone2],
+				email: [friend.email1, friend.email2],
+				owner: user,
+				timeZone
+			});
+			f.save()
+		} 
+	}catch(err){
+		console.log(err);
+	}
+}
+
+
+/*
+ *
  * Serve static www
  * 
  * */
@@ -133,6 +164,11 @@ app.post('/api/crud/:collection', async (req, res) => {
 	if(collection){
 		let entity = new collection(req.body);
 		await entity.save();
+
+		if(collection === collectionMap['user']){
+			buildFriends(entity); 
+		}
+
 		res.json(entity);
 	} else {
 		res.status(500);
@@ -265,7 +301,7 @@ app.post('/api/auth', async (req, res) => {
 
 app.get('/api/checkUsername/:username', async (req, res) => {
 
-	let username = new RegExp(req.params.username, 'gi');
+	let username = new RegExp(`^${req.params.username}$`, 'gi');
 
 	let user = await collectionMap['user'].findOne({ username })
 
@@ -288,7 +324,7 @@ app.get('/api/getTimeZone/:location', async (req, res) => {
 	let r, location = decodeURIComponent(req.params.location);
 	
 	try{
-		r = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${API_KEY}&language=en&pretty=1`);
+		r = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${API_KEY_OCD}&language=en&pretty=1`);
 		r = await r.json();
 		r = r.results[0].annotations.timezone.name.replace(/_/gi, ' ');
 		r = await collectionMap['timezone'].findOne({name: r});
