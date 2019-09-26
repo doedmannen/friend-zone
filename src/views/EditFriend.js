@@ -26,6 +26,7 @@ export default class EditFriend extends Component {
 				'header': 'Edit friend',
 				'button_ok': 'SAVE',
 				'button_remove': 'REMOVE',
+				'fetch_zone': 'FETCH TIMEZONE',
 				'input_fields': {
 					'firstName': 'Firstname', 
 					'lastName': 'Lastname', 
@@ -40,6 +41,7 @@ export default class EditFriend extends Component {
 				'header': 'Redigera vän',
 				'button_ok': 'SPARA',
 				'button_remove': 'TA BORT', 
+				'fetch_zone': 'HÄMTA TIDSZON',
 				'input_fields': {
 					'firstName': 'Förnamn', 
 					'lastName': 'Efternamn', 
@@ -63,6 +65,7 @@ export default class EditFriend extends Component {
 		},
 		formClear: false, 
 		formValidate: false,
+		preSetTimeZone: undefined, 
 		friend: null
 	};
 
@@ -121,6 +124,19 @@ export default class EditFriend extends Component {
 		await this.state.friend.delete(); 
 		this.props.history.push('/myFriends'); 
 	}
+
+	hasLocation(){
+		return this.state.inputFromFields.country && this.state.inputFromFields.city; 
+	}
+
+	async fetchZone(){
+		let preSetTimeZone, {country, city} = this.state.inputFromFields, location = encodeURIComponent(`${country} ${city}`);
+		try{
+			preSetTimeZone = (await( await fetch(`${window.location.origin}/api/getTimeZone/${location}`) ).json()).timeZone || undefined; 
+		}catch(err){}
+		this.setState({ preSetTimeZone })
+	}
+
 
 	render(){
 		let text = this.state.translations[store.lang];
@@ -186,14 +202,21 @@ export default class EditFriend extends Component {
 						max={255}
 						validate={ this.state.formValidate }
 						requiredField={true} />
-
+					
+		
+					<div className={ this.hasLocation() ? 'block mb-3' : 'hidden' }>
+						<button 
+							className="card-container p-3 pr-5 pl-5 pointer blue ml-2"
+							onClick={ e => this.fetchZone() }> { text['fetch_zone'] } <i className="fas fa-sync-alt"></i>
+						</button>
+					</div>
 		
 					<InputSelectList 
 						onInput={this.handleInput}
 						fieldName="timeZone"
 						placeHolder={ inputNames['timeZone'] }
 						displayField="name"
-						preSetItem={ this.state.friend.timeZone }
+						preSetItem={ this.state.preSetTimeZone || this.state.friend.timeZone }
 						validate={ this.state.formValidate }
 						requiredField={ true }
 						items={ this.state.timeZones } />

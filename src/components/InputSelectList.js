@@ -10,10 +10,7 @@ export default class InputSelectList extends Component {
 			this.setState( { } );
 		}
 		store.subTo(this.storeSub);
-		setTimeout(() => {
-			if(this.props.preSetItem)
-				this.reactOnInput(this.props.preSetItem)
-		}, 1)
+		this.checkPreSet(); 
 	}
 
 	componentWillUnmount(){
@@ -31,6 +28,27 @@ export default class InputSelectList extends Component {
 				this.validateInput(); 
 			}, 1);
 		}
+		this.checkPreSet(); 
+	}
+
+	checkPreSet(){
+		if(!this.props.preSetItem){
+			return; 
+		}
+		setTimeout(() => {
+			if(!this.state.preSet){
+				this.setState({ preSet: this.props.preSetItem }); 
+				this.reactOnInput(this.props.preSetItem);
+			} else {
+				if(typeof this.props.items[0] === 'object' && Object.entries(this.state.preSet).flat().join("") !== Object.entries(this.props.preSetItem).flat().join("")){
+					this.setState({ preSet: this.props.preSetItem })
+					this.reactOnInput(this.props.preSetItem);
+				} else if(this.state.preSet !== this.props.preSetItem) {
+					this.setState({ preSet: this.props.preSetItem })
+					this.reactOnInput(this.props.preSetItem);
+				}
+			}
+		}, 1000)
 	}
 
 	toggleExpand(e, bool){
@@ -46,6 +64,7 @@ export default class InputSelectList extends Component {
 		'display': '',
 		'expand': false,
 		'value': '',
+		'preSet': undefined,
 		'translations': {
 			'EN': {
 				'required': 'This field is required', 
