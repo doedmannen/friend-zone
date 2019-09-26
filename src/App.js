@@ -53,7 +53,9 @@ export default class App extends Component {
 	render(){
 		let navbarOrder = store.screenSize.isMDorAbove ? 'order-2 main-header-navigation' : ' pb-2 pt-2 order-5 bottom-navigation';  
 		return(
-			<Router> 
+			<div>
+				{ store.authStatus === 'done' && 
+			<Router>
 				<div className="app">
 					<header className="main-header order-1">
 						<Link to="/">
@@ -107,6 +109,8 @@ export default class App extends Component {
 					</section>
 				</div>
 			</Router>
+					}
+			</div>
 		);
 	}
 }

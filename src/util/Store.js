@@ -1,5 +1,6 @@
 const subs = [];
 const store = {
+	authStatus: 'init',
 	lang: 'EN',
 	dateFormat: 'DD/MM/YYYY',
 	timeFormat: '24HOUR', 
