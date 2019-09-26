@@ -180,26 +180,29 @@ export default class FriendDisplay extends Component {
 
 				{
 					this.state.expanded && 
-						<div className="mt-3" onClick={ e => e.stopPropagation() }>
-							<div className="mt-2">
-									{ this.state.translations[store.lang].phone }
-							</div>
-							<div>
-								{ this.printAllPhoneNumbers() } 
-							</div>
+						<div className="mt-3 flex" onClick={ e => e.stopPropagation() }>
+							<div className="flex-1"></div>
+							<div className="flex-5">
+								<div className="mt-2">
+										{ this.state.translations[store.lang].phone }
+								</div>
+								<div>
+									{ this.printAllPhoneNumbers() } 
+								</div>
 
-							<div className="mt-2">
-									{ this.state.translations[store.lang].email }
-							</div>
-							<div>
-								{ this.printAllEmails() }
-							</div>
+								<div className="mt-2">
+										{ this.state.translations[store.lang].email }
+								</div>
+								<div>
+									{ this.printAllEmails() }
+								</div>
 
-							<div className="pt-3">
-								<Link to={ '/editFriend?id=' + this.props.friend._id }>
-									<i className="fas fa-cog text-200 pr-3"></i> 
-									{ this.state.translations[store.lang].edit_friend }
-								</Link>
+								<div className="pt-3">
+									<Link to={ '/editFriend?id=' + this.props.friend._id }>
+										<i className="fas fa-cog text-200 pr-3"></i> 
+										{ this.state.translations[store.lang].edit_friend }
+									</Link>
+								</div>
 							</div>
 						</div>
 				}
