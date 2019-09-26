@@ -179,7 +179,7 @@ export default class FriendDisplay extends Component {
 				</div>
 
 				{
-					this.state.expanded ?
+					this.state.expanded && 
 						<div className="mt-3" onClick={ e => e.stopPropagation() }>
 							<div className="mt-2">
 									{ this.state.translations[store.lang].phone }
@@ -202,8 +202,6 @@ export default class FriendDisplay extends Component {
 								</Link>
 							</div>
 						</div>
-					: 
-						null 
 				}
 
 				</div>		
