@@ -13,6 +13,10 @@ let userSchema = new Schema({
 
 class UserClass {
 
+	constructor(o){
+		Object.assign(this, o); 
+	}
+
 }
 
 userSchema.loadClass(UserClass);

@@ -15,6 +15,10 @@ let friendSchema = new Schema({
 
 class FriendClass {
 
+	constructor(o){
+		Object.assign(this, o); 
+	}
+
 }
 
 friendSchema.loadClass(FriendClass);

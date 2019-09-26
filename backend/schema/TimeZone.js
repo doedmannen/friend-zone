@@ -14,6 +14,10 @@ let timeZoneSchema = new Schema({
 
 class TimeZoneClass {
 
+	constructor(o){
+		Object.assign(this, o); 
+	}
+
 }
 
 timeZoneSchema.loadClass(TimeZoneClass);
