@@ -1,3 +1,6 @@
+const { API_KEY } = require('./secrets/SuperSecretAPIKey'); 
+
+const fetch = require('node-fetch'); 
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
@@ -23,8 +26,7 @@ mongoose.connect(`mongodb://localhost/${dbName}`, {
 global.db = mongoose.connection;
 db.on('error', () => console.log('Could not connect to DB'));
 db.once('open', () => {
-  console.log('Connected to DB');
-   
+	console.log('Connected to DB');
  /*
   *
   * Do not start express until we 
@@ -274,6 +276,36 @@ app.get('/api/checkUsername/:username', async (req, res) => {
 	}
 
 });
+
+/*
+ *
+ * Check for location timezone
+ *
+ * */
+
+app.get('/api/getTimeZone/:location', async (req, res) => {
+
+	let r, location = decodeURIComponent(req.params.location);
+	
+	try{
+		r = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${API_KEY}&language=en&pretty=1`);
+		r = await r.json();
+		r = r.results[0].annotations.timezone.name.replace(/_/gi, ' ');
+		r = await collectionMap['timezone'].findOne({name: r});
+	} catch(err){
+		r = null; 
+	}
+
+	if(r){
+		res.json({timeZone: r});
+	} else {
+		res.status(404); 
+		res.json({timeZone: null});
+	}
+
+});
+
+
 
 
 /*
