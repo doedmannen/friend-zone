@@ -23,7 +23,7 @@ export default class FriendDisplay extends Component {
 			},
 			'SE': {
 				'phone': 'Telefonnummer',
-				'no_phone': 'Inga telefonnummeri', 
+				'no_phone': 'Inga telefonnummer', 
 				'email': 'E-post', 
 				'no_email': 'Inga e-postadresser',
 				'edit_friend': 'Redigera vän'
