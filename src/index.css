@@ -31,6 +31,30 @@
 }
 
 /*
+ * Wordbreak
+ * */
+.word-break-all{
+	word-break: break-all; 
+}
+
+/*
+ * Floating 
+ * */
+.float-right{
+	float: right; 
+}
+
+/*
+ * Position
+ * */
+.pos-absolute{
+	position: absolute; 
+}
+.pos-relative{
+	position: relative; 
+}
+
+/*
  *Textsize
  * */
 .text-50{
@@ -106,7 +130,12 @@ a:active > *, a:hover > *, a:active, a:hover{
 .align-items-center{
  align-items: center; 
 }
-
+.justify-content-end{
+	justify-content: end; 
+}
+.align-self-center{
+	align-self: center; 
+}
 
 /*
  * Flexsize 
@@ -367,7 +396,7 @@ input:focus, button:focus{
 
 
 .input-text-field{
-
+	padding-right: 40px; 
 }
 
 .input-text-field:focus{
