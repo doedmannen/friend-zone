@@ -7,6 +7,16 @@ const app = express();
 app.use(express.json());
 
 /*
+ * 
+ * Define port for express
+ *
+ * */
+const PORT = 5000;
+
+
+
+
+/*
  *
  * Use mongoose to connect to MongoDB
  *
@@ -25,9 +35,9 @@ mongoose.connect(`mongodb://localhost/${dbName}`, {
  * */
 global.db = mongoose.connection;
 db.on('error', () => console.log('Could not connect to DB'));
-db.once('open', () => {
+db.once('open', async () => {
 	console.log('Connected to DB');
-	
+
  /*
   *
   * Do not start express until we 
@@ -36,14 +46,6 @@ db.once('open', () => {
   * */
   startWebServer();
 });
-
-/*
- * 
- * Define port for express
- *
- * */
-const PORT = 5000;
-
 
 /*
  * 
@@ -360,7 +362,34 @@ app.all('*', (req, res) => {
  * Create webserver 
  * 
  * */
-function startWebServer(){
+async function startWebServer(){
+
+	/*
+	 * If no timezones are found, create them 
+	 * */
+	console.log("Checking for timezones...")
+	let oldTimeZones, TZ = collectionMap['timezone']; 
+	try{
+		oldTimeZones = await TZ.find({});
+	}	catch(err){  }
+	if(!oldTimeZones.length){
+		console.log('No timezones found. Creating from file...');
+		const { zones } = require('./timezones/zones'); 
+		for(let zone of zones){
+			let insertEntity = new TZ(zone); 
+			await insertEntity.save();
+		}
+		console.log(`Created ${zones.length} timezones from file.`)
+	} else {
+		console.log(`Found ${oldTimeZones.length} timezones. `)
+	}
+
+
+	/*
+	 * 
+	 * Start server 
+	 *
+	 * */
 	app.listen(PORT, () => console.log('Listening on port ' + PORT));
 }
 
