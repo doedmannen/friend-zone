@@ -12,13 +12,13 @@ export default class Home extends Component {
 		translations: {
 			'EN': {
 				'headline': 'Welcome to FriendZone',
-				'text-1': 'FriendZone is an app that helps you keep track of when it is most likely that you can get in touch with your friends, even if they work weird hours, sleep in late or is in a timezone that you never can keep track of.',
-				'text-2': 'Simply add your friends into the app and enter what timezones they are in and forget about thinking "is it in the middle of the night on their side of the globe right now?" '
+				'text-1': 'Do you have a lot of friends that are spread out all over the world in different timezones? Do you find it hard to keep track of what the local time is in another country? Then FriendZone is the perfect app for you! ',
+				'text-2': 'Simply add your friends and their location into the app and let us fetch their timezone and what local date and time they have. '
 			},
 			'SE': {
 				'headline': 'Välkommen till FriendZone',
-				'text-1': 'FriendZone är en app som hjälper dig att hålla koll på när det är mest troligt att kunna få kontakt med dina vänner, även om de jobbar konstiga tider, sover sent eller befinner sig i en tidszon som du aldrig kan hålla koll på.',
-				'text-2': 'Bara lägg till dina vänner i appen och fyll i vilka tidszoner de befinner sig i och sluta oroa dig över "är det natt nu på deras sida jordklotet?"'
+				'text-1': 'Har du många vänner som är utspridda över hela världen i olika tidszoner? Tycker du att det är svårt att komma ihåg vilken lokal tid det är i ett annat land? Då är FriendZone den perfekta appen för dig! ',
+				'text-2': 'Bara lägg till dina vänner och deras plats i appen och låt oss hämta deras tidszon och vad för lokalt datum och tid de har. '
 			}
 		}
 	};
