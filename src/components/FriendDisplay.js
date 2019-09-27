@@ -161,17 +161,17 @@ export default class FriendDisplay extends Component {
 					className={containerSize + ' flex flex-dir-col p-3 card-container pointer'}>
 					
 					<div className="flex flex-1 flex-dir-row">	
-					<div className="flex-1 flex justify-center align-items-center">
+					<div className="flex-1 flex justify-center align-items-center pr-3">
 						<Clock size="50" timeAnalog={this.state.time.TIMEANALOGDEGREE} />
 					</div>
 					
 					<div className="flex-5">
 						<div>
-							<div>{status} {this.props.friend.firstName} {this.props.friend.lastName} </div>
-							<div>{ this.props.friend.country }, { this.props.friend.city }</div>
-							<div className="text-50">{`${this.props.friend.timeZone.name} ${this.props.friend.timeZone.short}`}</div>
+							<div className="word-break-all"> {this.props.friend.firstName} {this.props.friend.lastName} </div>
+							<div className="word-break-all">{ this.props.friend.country }, { this.props.friend.city }</div>
+							<div className="text-50 word-break-all">{`${this.props.friend.timeZone.name} ${this.props.friend.timeZone.short}`}</div>
 						</div>
-						<div className="digital-time">
+						<div className="digital-time word-break-all">
 							{ date } 
 							{ time } 
 						</div>
@@ -181,19 +181,19 @@ export default class FriendDisplay extends Component {
 				{
 					this.state.expanded && 
 						<div className="mt-3 flex" onClick={ e => e.stopPropagation() }>
-							<div className="flex-1"></div>
+							<div className="flex-1 pr-3"></div>
 							<div className="flex-5">
 								<div className="mt-2">
 										{ this.state.translations[store.lang].phone }
 								</div>
-								<div>
+								<div className="word-break-all">
 									{ this.printAllPhoneNumbers() } 
 								</div>
 
 								<div className="mt-2">
 										{ this.state.translations[store.lang].email }
 								</div>
-								<div>
+								<div className="word-break-all">
 									{ this.printAllEmails() }
 								</div>
 
