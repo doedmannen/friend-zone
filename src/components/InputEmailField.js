@@ -55,7 +55,7 @@ export default class InputEmailField extends Component {
 	}
 
 	reactOnCompletedInput(){
-		let input = this.state.input.filter(s => s.length); 
+		let input = this.state.input.filter(s => s.length);
 		if(this.validateInput(input)){
 			this.props.onInput(this.props.fieldName, input);
 		} else {
@@ -80,7 +80,7 @@ export default class InputEmailField extends Component {
 
 	validateInput(input = this.state.input){
 		this.errors.length = 0; 
-		if(!input.length && input.length === 1 && input[0].length === 0){
+		if(this.props.requiredField && (!input.length || input.length === 1 && input[0].length === 0)){
 			this.errors.push(this.state.translations[store.lang].required)	
 		}
 		if(input.length){
@@ -125,9 +125,9 @@ export default class InputEmailField extends Component {
 		return(
 			<div className="flex flex-dir-row mb-3">
 				<div className="flex-1"></div>
-				<div className="flex-3 flex flex-dir-col">
-					{ input.slice(0,input.length-1).map((item, index) => <div className="p-3 mb-3 card-container" key={index}> {item}</div> ) }
-					<div className="flex-1 flex flex-dir-row align-items-center">
+				<div className="flex-3 flex flex-dir-col"> 
+					{ input.slice(0,input.length-1).map((item, index) => <div className="p-3 mb-3 flex flex-dir-row card-container text-left word-break-all" key={index}><div className="flex-1"> {item}</div> <div className="align-self-center"><i onClick={e => this.removeItem(index)} className="fas fa-times-circle text-200 ml-1 pointer float-right"> </i></div>  </div> ) }
+					<div className="flex-1 flex flex-dir-row align-items-center justify-content-end">
 						<input type="text"
 							className={ "card-container input-text-field p-3 flex-1 " + (this.errors.length ? 'has-errors-input' : '') }
 							onChange={ e => this.reactOnInput(e) }
@@ -135,15 +135,11 @@ export default class InputEmailField extends Component {
 							onKeyUp={ e => this.keyUpCheck(e)}
 							onBlur={ e => this.reactOnCompletedInput(e) }
 							value={ input[input.length-1] } />
+						<i className="fas fa-plus-circle text-200 mr-3 pointer float-right pos-absolute" onClick={e => this.pushItem()}></i>
 					</div>
 					<div className={ "pt-1 input-error-text text-100 " + (this.errors.length ? 'block' : 'hidden') }>{ errorText }</div>
 				</div>
-				<div className="flex-1 flex flex-dir-col">
-					{ input.slice(0,input.length-1).map((item, index) => <div className="p-3 mb-3 pointer text-left" onClick={e => this.removeItem(index)} key={'remover'+index}> <i className="fas fa-times-circle text-200 ml-3"> </i> </div> ) }
-
-					<div className="pointer p-3 text-left" onClick={e => this.pushItem()}>
-							<i className="fas fa-plus-circle text-200 ml-3"></i>
-					</div>
+				<div className="flex-1">
 				</div>
 			</div>
 		)
