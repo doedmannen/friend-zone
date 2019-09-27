@@ -1,5 +1,5 @@
 # FriendZone
-FriendZone is a school assignment that I did in September 2019 for the class Advanced JavaScript 
+FriendZone is a school assignment that I did in September 2019 for the course Advanced JavaScript 
 
 
 ## Startup 
@@ -14,21 +14,25 @@ The keys should be placed in a file that has the following path and name:
 The file look like this: 
 
 ```
+const API_KEY_OCD = /* API KEY FOR OPENCAGEDATA */;
+const API_KEY_MOCK = /* API KEY FOR MOCKAROO */; 
 
+module.exports.API_KEY_OCD = API_KEY_OCD; 
+module.exports.API_KEY_MOCK = API_KEY_MOCK; 
 ```
 
-Once the API Keys are in place, go to the root of the project and run
+
+Once the API Keys are in place, go to the root and run the following commands: 
 
 ### `npm install`
 
-### `npm run build`
+### `npm start`
+
+Open a new terminal and run: 
 
 ### `cd backend`
 
 ### `node index.js`
 
-or 
-
-### `nodemon index.js`
-
+Then go to `http://localhost:3000/`
 
