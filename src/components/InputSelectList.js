@@ -6,6 +6,7 @@ import './InputSelectList.css';
 export default class InputSelectList extends Component {
 
 	componentDidMount(){
+		this._mounted = true; 
 		this.storeSub = (changes) => {
 			this.setState( { } );
 		}
@@ -14,6 +15,7 @@ export default class InputSelectList extends Component {
 	}
 
 	componentWillUnmount(){
+		this._mounted = false; 
 		store.unSub(this.storeSub)
 	}
 	
@@ -36,6 +38,8 @@ export default class InputSelectList extends Component {
 			return; 
 		}
 		setTimeout(() => {
+			if(!this._mounted)
+				return; 
 			if(!this.state.preSet){
 				this.setState({ preSet: this.props.preSetItem }); 
 				this.reactOnInput(this.props.preSetItem);
