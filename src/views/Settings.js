@@ -45,8 +45,8 @@ export default class Settings extends Component {
 			'EN': [{value: '12HOUR', name: '12 hours'}, {value: '24HOUR', name: '24 hours'}]
 		},
 		date: {
-			'SE': [{value: 'YYYY/DD/MM', name: 'År/Månad/Dag'}, {value: 'DD/MM/YYYY', name: 'Dag/Månad/År'}, {value: 'MM/DD/YYYY', name: 'Månad/Dag/År'}],
-			'EN': [{value: 'YYYY/DD/MM', name: 'Year/Month/Day'}, {value: 'DD/MM/YYYY', name: 'Day/Month/Year'}, {value: 'MM/DD/YYYY', name: 'Month/Day/Year'}]
+            'SE': [{value: 'YYYY/MM/DD', name: 'År/Månad/Dag'}, {value: 'DD/MM/YYYY', name: 'Dag/Månad/År'}, {value: 'MM/DD/YYYY', name: 'Månad/Dag/År'}],
+            'EN': [{value: 'YYYY/MM/DD', name: 'Year/Month/Day'}, {value: 'DD/MM/YYYY', name: 'Day/Month/Year'}, {value: 'MM/DD/YYYY', name: 'Month/Day/Year'}]
 		}, 
 		input: {
 			timeFormat: undefined,
